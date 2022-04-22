@@ -1,0 +1,90 @@
+@use '../../scss/' as *;
+.song {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $mb-1;
+  border-bottom: 1px solid rgba($color: $text-color, $alpha: .1);
+  &:hover {
+    background-color: rgba($color: $text-color, $alpha: .1);
+  }
+  &__left {
+    display: flex;
+    align-items: center;
+    flex-basis: 30%;
+    gap: $mb-1;
+   
+  }
+  &__thumb {
+    width: 50px;
+    display: flex;
+    align-items: center;
+  }
+  &__img {
+    margin: auto 0;
+  }
+  &__information {
+
+  }
+  &__name {
+    font-weight: 500;
+  }
+  &__singer {
+    font-size: $smaller-font-size;
+    color: $text-color-light;
+  }
+  &__album {
+    flex: 1;
+    @include mobile {
+      display: none;
+    }
+  }
+
+  &__view-duration {
+    flex-basis: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    @include mobile {
+      display: none;
+    }
+  }
+
+  &__icon {
+    font-size: $icon-font-size;
+  }
+  &__view, &__duration {
+    display: flex;
+    align-items: center;
+    gap: $mb-1;
+    
+  }
+  &__number {
+    font-size: $small-font-size;
+    color: $text-color-light;
+  }
+
+  &__action {
+    flex-basis: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  &__favorite, &__dot {
+    position: relative;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    &:hover {
+      background-color: rgba($color: $text-color, $alpha: .1);
+    }
+    &:hover .tooltip-text{
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}

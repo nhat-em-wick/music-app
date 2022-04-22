@@ -1,0 +1,12 @@
+@use '../../scss/' as *;
+
+.section {
+  padding: $mb-3 0;
+}
+
+.section-title {
+  margin-bottom: $mb-2;
+  font-size: $h2-font-size;
+  color: $title-color;
+  text-transform: capitalize;
+}

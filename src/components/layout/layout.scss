@@ -1,0 +1,79 @@
+@use "../../scss/" as *;
+
+.main {
+  padding-top: calc($header-height + $mb-3);
+
+  &__sidebar, &__sidebar-mobile {
+    padding-top: $header-height;
+    width: 200px;
+    min-height: 100vh;
+    background-color: $bg-container;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    box-shadow: 1px 0 1px rgba($color: #000000, $alpha: 0.05);
+    transition: left 0.3s ease;
+    z-index: 97;
+    &.active {
+      left: 0%;
+    }
+  }
+  &__sidebar {
+    @include tablet {
+      display: none;
+    }
+    @include mobile {
+      display: none;
+    }
+  }
+  &__sidebar-mobile {
+    display: none;
+
+    @include tablet {
+      display: block;
+    }
+    @include mobile {
+      display: block;
+    }
+  }
+
+  &__sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba($color: #000000, $alpha: 0.09);
+    z-index: 10;
+    display: none;
+    &.active {
+      @include tablet {
+        display: block;
+      }
+      @include mobile {
+        display: block;
+      }
+    }
+  }
+
+  &__content {
+    padding: 0 10rem;
+    transition: all 0.3s ease;
+    @include tablet {
+      padding: 0 $mb-2;
+    }
+    @include mobile {
+      padding: 0 $mb-2;
+    }
+  }
+  &__content.shrink {
+    padding-left: calc($width-sidebar + $mb-4);
+    padding-right: $mb-4;
+    @include tablet {
+      padding: 0 $mb-2;
+    }
+    @include mobile {
+      padding: 0 $mb-2;
+    }
+  }
+}

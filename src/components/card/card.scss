@@ -1,0 +1,107 @@
+@use '../../scss' as *;
+
+.card {
+  position: relative;
+  overflow: hidden;
+ 
+  &__img {
+    padding-top: 100%;
+    transition: transform .3s ease;
+  }
+  &__information {
+    margin-top: $mb-1;
+  }
+  &__name {
+    color: $title-color;
+    font-weight: 500;
+    font-size: $h3-font-size;
+    text-transform: capitalize;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    cursor: pointer;
+    transition: color .3s ease;
+    &:hover {
+      color: $primary-color;
+    }
+  }
+  &__singers {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  &__singer__item {
+    display: inline-block;
+  }
+  &__singer__link {
+    text-transform: capitalize;
+    transition: color .3s ease;
+    &:hover {
+      color: $primary-color;
+    }
+  }
+  &__thumb {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+  &__thumb:hover &__overlay {
+    display: block;
+  }
+  &__thumb:hover &__action {
+    display: flex;
+  }
+  &__thumb:hover  &__img {
+    transform: scale(1.2);
+  }
+  &__overlay {
+    position: absolute;
+    background-color: rgba($color: #000000, $alpha: .3);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+    display: none;
+  }
+  &__action {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 1.5rem;
+    display: none;
+    gap: 2rem;
+    
+    &-icon {
+      position: relative;
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      &:nth-child(2) {
+        font-size: 3rem;
+        &:hover {
+          background-color: transparent;
+          color: rgba($color: #fff, $alpha: .9);
+        }
+      }
+      &:hover  {
+        background-color: rgba($color: #fff, $alpha: .2);
+      }
+      &:hover > .tooltip-text {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+}
