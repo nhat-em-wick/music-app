@@ -5,13 +5,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: $mb-2 $mb-2;
-  background-color: $bg-container;
+  padding: getVariable(mb-2);
+  background-color: getVariable(bg-container);
   position: fixed;
   top: 0;
   left: 0;
   z-index: 99;
-  height: $header-height;
+  height: getVariable(header-height);
   box-shadow: 0 1px 3px rgba($color: #000000, $alpha: .1);
   &__left {
     width: 20%;
@@ -35,7 +35,7 @@
   }
   &__center {
     flex: 1;
-    padding: 0 $mb-3;
+    padding: 0 getVariable(mb-3);
   }
   &__menu {
     padding: .2rem 0;
@@ -48,14 +48,14 @@
   &__hamburger--toggle {
     width: 1.875rem;
     height: 3px;
-    background-color: $text-color-light;
+    background-color: getVariable(text-color-light);
     position: relative;
     border-radius: 10px;
   }
   &__hamburger--toggle::before {
     width: 1.875rem;
     height: 3px;
-    background-color: $text-color-light;
+    background-color: getVariable(text-color-light);
     position: absolute;
     content: '';
     top: -6px;
@@ -65,7 +65,7 @@
   &__hamburger--toggle::after {
     width: 1.875rem;
     height: 3px;
-    background-color: $text-color-light;
+    background-color: getVariable(text-color-light);
     position: absolute;
     content: '';
     top: 6px;
@@ -75,7 +75,7 @@
   &__logo {
     display: flex;
     align-items: center;
-    margin-left: $mb-2;
+    margin-left: getVariable(mb-2);
   }
   &__animate {
     display: flex;
@@ -89,7 +89,7 @@
   &__animate > .wave {
     width: 4px;
     height: 100%;
-    background-color: $primary-color;
+    background-color: getVariable(primary-color);
     border-radius: 10px;
   }
 
@@ -123,8 +123,8 @@
   
   &__title {
     font-size: 1.2rem;
-    margin-left: $mb-1;
-    color: $text-color;
+    margin-left: getVariable(mb-1);
+    color: getVariable(text-color);
   }
   &__search {
     position: relative;
@@ -136,16 +136,17 @@
       top: 60%;
       transform: translateY(-50%);
       right: 15px;
-      font-size: $icon-font-size;
+      font-size: getVariable(icon-font-size);
     }
   }
   &__input {
     width: 100%;
     height: 100%;
     border: none;
-    background-color: $bg-body;
-    padding: $mb-1 $mb-2;
-    padding-right: $mb-5;
+    color: getVariable(text-color);
+    background-color: getVariable(bg-body);
+    padding: getVariable(mb-1) getVariable(mb-2);
+    padding-right: getVariable(mb-5);
     border-radius: 25px;
   }
   &__input:focus {
@@ -156,7 +157,7 @@
   }
   // 
   &__icon-search--toggle {
-    font-size: $icon-font-size;
+    font-size: getVariable(icon-font-size);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -176,17 +177,17 @@
     width: 100%;
     top: 0;
     left: 0;
-    background-color: $bg-container;
-    height: $header-height;
-    padding: $mb-2;
+    background-color: getVariable(bg-container);
+    height: getVariable(header-height);
+    padding: getVariable(mb-2);
     display: none;
 
     &__icon {
       position: absolute;
       top: 50%;
-      right: $mb-2;
+      right: getVariable(mb-2);
       transform: translateY(-50%);
-      font-size: $icon-font-size;
+      font-size: getVariable(icon-font-size);
     }
   }
   &__search-mobile.active {
@@ -195,8 +196,8 @@
  &__search-mobile__input {
     width: 100%;
     border: none;
-    padding: $mb-1 $mb-2;
-    padding-right: $mb-5;
+    padding: getVariable(mb-1) getVariable(mb-2);
+    padding-right: getVariable(mb-5);
   }
   &__search-mobile__input:focus {
     outline: none;
@@ -215,11 +216,11 @@
     align-items: center;
     justify-content: center;
     margin-left: auto;
-    font-size: $icon-font-size;
+    font-size: getVariable(icon-font-size);
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    background-color: $primary-color;
+    background-color: getVariable(primary-color);
     color: #fff;
     display: none;
     @include mobile {
@@ -227,11 +228,11 @@
     }
   }
   &__login, &__register {
-    padding: $mb-1 $mb-2;
+    padding: getVariable(mb-1) getVariable(mb-2);
     cursor: pointer;
   }
   &__register {
-    background-color: $primary-color;
+    background-color: getVariable(primary-color);
     border-radius: 25px;
     color: #fff;
   }
@@ -246,8 +247,8 @@
     height: 35px;
     border-radius: 50%;
     overflow: hidden;
-    border: 1px solid $primary-color;
-    margin-left: $mb-1;
+    border: 1px solid getVariable(primary-color);
+    margin-left: getVariable(mb-1);
   }
   &__user-name, &__user__icon{
      @include mobile {

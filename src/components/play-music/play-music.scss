@@ -1,0 +1,174 @@
+@use '../../scss/' as *;
+
+.play-music {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background-color: getVariable(bg-container);
+  padding: getVariable(mb-1) getVariable(mb-2);
+  display: flex;
+  align-items: center;
+  z-index: 99;
+  box-shadow: -1px 0 2px 0 rgba($color: #000000, $alpha: .2);
+  gap: getVariable(mb-3);
+  &__left {
+    flex-basis: 25%;
+    display: flex;
+    gap: getVariable(mb-1);
+    align-items: center;
+  }
+  &__center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: getVariable(mb-1);
+  }
+  &__right {
+    flex-basis: 20%;
+    display: flex;
+    align-items: center;
+    gap: getVariable(mb-2);
+  }
+  &__thumb {
+    width: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex-shrink: 0;
+  }
+  &__name-song {
+    font-size: getVariable(h3-font-size);
+    color: getVariable(text-color);
+    display: block;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  &__singer {
+    font-size: getVariable(small-font-size);
+  }
+  &__control {
+    display: flex;
+    align-items: center;
+    gap: getVariable(mb-2);
+    
+  }
+  &__icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    &.icon__previous, &.icon__next {
+      font-size: 2rem;
+    }
+    &.icon__random , &.icon__previous ,
+    &.icon__next , &.icon__repeat,
+    &.icon__heart, &.icon__download  {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      position: relative;
+      &>i {
+        @include centerAbs();
+      }
+      &:hover {
+        background-color: getVariable(border-color);
+      }
+      &:hover .tooltip-text {
+        opacity: 1;
+        visibility: visible;
+      }
+      
+    }
+    &.icon__play {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      position: relative;
+      
+      
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        padding: .25rem;
+        border-radius: 50%;
+        pointer-events: none;
+        background-image: linear-gradient(to right bottom, getVariable(primary-color), #ff6bcb);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask:  linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+      }
+    }
+  }
+  &__progress-bar-song {
+    display: flex;
+    align-items: center;
+  }
+  &__range {
+    position: relative;
+    height: 4px;
+    background-color: getVariable(border-color);
+    border-radius: 10px;
+    margin: 0 getVariable(mb-2);
+    cursor: pointer;
+    width: 150px;
+    &:hover {
+      height: 6px;
+    }
+    &.range__song {
+      width: 400px;
+    }
+    &.range__volume {
+      width: 150px;
+    }
+    
+  }
+  &__range-current {
+    position: absolute;
+    content: '';
+    background-color: getVariable(primary-color);
+    top: 0;
+    height: 100%;
+    border-radius: 10px;
+    &.range-current__song {
+      width: 30%;
+    }
+    &.range-current__volume {
+      width: 30%;
+    }
+  }
+  &__range-dot {
+    position: absolute;
+    content: '';
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background-color: getVariable(primary-color);
+    top: -4px;
+    left: calc(0% - 5px);
+    border: 1px solid getVariable(border-color);
+    // display: none;
+  }
+  &__range.range__song:hover .dot__song {
+    display: block;
+  }
+  &__time {
+    font-size:getVariable(smaller-font-size);
+  }
+  
+  &__progress-bar-volumn {
+    width: 150px;
+    display: flex;
+    align-items: center;
+  }
+  
+}

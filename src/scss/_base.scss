@@ -2,6 +2,32 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
+:root {
+
+  @each $name, $color in $colors {
+    --#{$name}: #{$color};
+  }
+
+  @each $name, $size in $font-sizes {
+    --#{$name}: #{$size};
+  }
+
+  @each $name, $mb in $mbs {
+    --#{$name}: #{$mb};
+  }
+
+  --header-height: 4.25rem;
+  --width-sidebar: 200px;
+
+}
+
+@function getVariable($value) {
+  @return var(--#{$value})
+}
+
+
+
+
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -13,14 +39,24 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
+.app {
   font-family: 'Roboto', sans-serif;
-  color: $text-color;
-  font-size: $normal-font-size;
-  background-color: $bg-body;
+  color: getVariable(text-color);
+  font-size: getVariable(normal-font-size);
+  background-color: getVariable(bg-body);
   user-select: none;
   line-height: 1.3rem;
 }
+
+@each $theme-name, $properties in $themes {
+  .app.#{$theme-name} {
+    // define a css variable for each property
+    @each $name, $property in $properties {
+      --#{$name}: #{$property};
+    }
+  }
+}
+
 
 a {
   display: block;
@@ -41,7 +77,7 @@ img {
 .tooltip-text {
   position: absolute;
   background-color: #292929;
-  padding: .2rem $mb-1;
+  padding: .2rem getVariable(mb-1);
   width: max-content;
   font-size: .76rem;
   color: #fff;

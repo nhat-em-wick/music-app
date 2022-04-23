@@ -1,27 +1,50 @@
 // light theme
-$bg-body: #f7f8f9;
-$bg-container: #fff;
-$title-color: #212529;
-$text-color: #212529;
-$text-color-light: #939597;
-$bg-input: #202326;
-$primary-color: #eb530f;
-// font-size
-$normal-font-size: .938rem;
-$small-font-size: .875rem;
-$smaller-font-size: .813rem;
+$colors: (
+  bg-body: #f7f8f9,
+  bg-container: #fff,
+  title-color: #212529,
+  text-color: #212529,
+  text-color-light: #939597,
+  bg-input: #202326,
+  primary-color: #eb530f,
+);
 
-$h2-font-size: 1.2rem;
-$h3-font-size: 1rem;
+$themes: (
+  "light-theme": (
+    bg-body: #f7f8f9,
+    bg-container: #fff,
+    title-color: #212529,
+    text-color: #212529,
+    text-color-light: #939597,
+    bg-input: #202326,
+    primary-color: #eb530f,
+    border-color: rgba(#000, .1)
+  ),
+  "dark-theme": (
+    bg-body: #161618,
+    bg-container: #1F2125,
+    title-color: #fff,
+    text-color: rgba(#fff, .9),
+    text-color-light: rgba(#fff, .8),
+    bg-input: #202326,
+    primary-color: #eb530f,
+    border-color: rgba(#fff, .1)
+  )
+);
 
-$icon-font-size: 1.2rem;
+$font-sizes: (
+  normal-font-size: .938rem,
+  small-font-size: .875rem,
+  smaller-font-size: .813rem,
+  h2-font-size: 1.2rem,
+  h3-font-size: 1rem,
+  icon-font-size: 1.2rem,
+);
 
-// margin
-$mb-1: .5rem;
-$mb-2: 1rem;
-$mb-3: 1.5rem;
-$mb-4: 2rem;
-$mb-5: 2.5rem;
-
-$header-height: 4.25rem;
-$width-sidebar: 200px;
+$mbs: (
+  mb-1: .5rem,
+  mb-2: 1rem,
+  mb-3: 1.5rem,
+  mb-4: 2rem,
+  mb-5: 2.5rem,
+)

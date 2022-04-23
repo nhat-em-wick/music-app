@@ -27,7 +27,8 @@ const Sidebar = (props) => {
   const handleChangeTheme = () => {
     const icon = changeThemeRef.current.querySelector('.change-theme__icon')
     icon.classList.toggle('active')
-    
+
+    props.changeTheme()
   }
 
   return (

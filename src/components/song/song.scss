@@ -3,22 +3,64 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: $mb-1;
-  border-bottom: 1px solid rgba($color: $text-color, $alpha: .1);
+  padding: getVariable(mb-1);
+  border-radius: 5px;
+  position: relative;
+   &::after {
+    position: absolute;
+    content: '';
+    width: calc(100% - 5px);
+    height: 1px;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    background-color: getVariable(border-color);
+   }
+  
   &:hover {
-    background-color: rgba($color: $text-color, $alpha: .1);
+    background-color: getVariable(border-color);
+   
   }
   &__left {
     display: flex;
     align-items: center;
     flex-basis: 30%;
-    gap: $mb-1;
+    gap: getVariable(mb-1);
    
   }
+  &:hover &__thumb > &__thumb__overlay {
+    background-color: rgba($color: #000000, $alpha: .4);
+  }
+  &:hover &__thumb > &__icon {
+    display: block;
+  }
   &__thumb {
-    width: 50px;
+    width: 40px;
     display: flex;
     align-items: center;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    &__overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+    .song__icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      color: #fff;
+      display: none;
+      &:hover {
+        opacity: .8;
+      }
+    }
   }
   &__img {
     margin: auto 0;
@@ -30,8 +72,8 @@
     font-weight: 500;
   }
   &__singer {
-    font-size: $smaller-font-size;
-    color: $text-color-light;
+    font-size: getVariable(smaller-font-size);
+    color: getVariable(text-color-light);
   }
   &__album {
     flex: 1;
@@ -51,17 +93,17 @@
   }
 
   &__icon {
-    font-size: $icon-font-size;
+    font-size: getVariable(icon-font-size);
   }
   &__view, &__duration {
     display: flex;
     align-items: center;
-    gap: $mb-1;
+    gap: getVariable(mb-1);
     
   }
   &__number {
-    font-size: $small-font-size;
-    color: $text-color-light;
+    font-size: getVariable(small-font-size);
+    color: getVariable(text-color-light);
   }
 
   &__action {
@@ -79,8 +121,9 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    
     &:hover {
-      background-color: rgba($color: $text-color, $alpha: .1);
+      background-color: rgba($color: getVariable(text-color), $alpha: .1);
     }
     &:hover .tooltip-text{
       opacity: 1;

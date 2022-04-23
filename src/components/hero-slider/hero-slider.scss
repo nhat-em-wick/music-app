@@ -3,7 +3,8 @@
 .swiper {
   position: relative;
   width: 100%;
-  margin-bottom: $mb-2;
+  margin-bottom: getVariable(mb-2);
+  border-radius: 10px;
   &:hover {
     .swiper-btn-prev, .swiper-btn-next {
       opacity: 1;
@@ -25,7 +26,7 @@
   justify-content: center;
   align-items: center;
   font-size: 2rem;
-  color: $text-color;
+  color: #fff;
   cursor: pointer;
   position: absolute;
   top: 50%;

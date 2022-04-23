@@ -1,13 +1,13 @@
 @use "../../scss/" as *;
 
 .main {
-  padding-top: calc($header-height + $mb-3);
+  padding-top: calc(getVariable(header-height) + getVariable(mb-3));
 
   &__sidebar, &__sidebar-mobile {
-    padding-top: $header-height;
+    padding-top: getVariable(header-height);
     width: 200px;
     min-height: 100vh;
-    background-color: $bg-container;
+    background-color: getVariable(bg-container);
     position: fixed;
     top: 0;
     left: -100%;
@@ -60,20 +60,20 @@
     padding: 0 10rem;
     transition: all 0.3s ease;
     @include tablet {
-      padding: 0 $mb-2;
+      padding: 0 getVariable(mb-2);
     }
     @include mobile {
-      padding: 0 $mb-2;
+      padding: 0 getVariable(mb-2);
     }
   }
   &__content.shrink {
-    padding-left: calc($width-sidebar + $mb-4);
-    padding-right: $mb-4;
+    padding-left: calc(getVariable(width-sidebar) + getVariable(mb-4));
+    padding-right: getVariable(mb-4);
     @include tablet {
-      padding: 0 $mb-2;
+      padding: 0 getVariable(mb-2);
     }
     @include mobile {
-      padding: 0 $mb-2;
+      padding: 0 getVariable(mb-2);
     }
   }
 }

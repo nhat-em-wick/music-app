@@ -33,13 +33,10 @@ const HeroSlider = (props) => {
           disableOnInteraction: false,
         }}
         breakpoints={{
-          600: {
+          400: {
             slidesPerView: 1,
           },
-          1024: {
-            slidesPerView: 3,
-            spaceBetween: 50,
-          },
+          
         }}
       >
         <SwiperSlide>

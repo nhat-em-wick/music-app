@@ -8,6 +8,10 @@ function Song(props) {
       <div className="song">
         <div className="song__left">
           <div className="song__thumb">
+            <div className="song__thumb__overlay"></div>
+            <span className="song__icon">
+              <i className="bx bx-play"></i>
+            </span>
             <img src="https://photo-resize-zmp3.zmdcdn.me/w320_r1x1_webp/cover/d/a/c/6/dac69cd1300a635c193c0f03e8d6d617.jpg" alt="" />
           </div>
           <div className="song__information">

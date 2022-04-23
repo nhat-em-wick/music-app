@@ -7,12 +7,12 @@
     
   }
   &__title {
-    font-size: $smaller-font-size;
-    color: $text-color-light;
+    font-size: getVariable(smaller-font-size);
+    color: getVariable(text-color-light);
     font-weight: normal;
-    margin-left: $mb-2;
-    margin-bottom: $mb-1;
-    margin-top: $mb-3;
+    margin-left: getVariable(mb-2);
+    margin-bottom: getVariable(mb-1);
+    margin-top: getVariable(mb-3);
   }
   &__list {
 
@@ -21,10 +21,10 @@
     position: relative;
     transition: color .3s ease;
     &:hover {
-      color: $primary-color;
+      color: getVariable(primary-color);
     }
     &.active {
-      color: $primary-color;
+      color: getVariable(primary-color);
     }
   }
   &__item::before {
@@ -34,7 +34,7 @@
     top: 0;
     width: 3px;
     height: 100%;
-    background-color: $primary-color;
+    background-color: getVariable(primary-color);
     border-radius: 10px;
     opacity: 0;
     transition: opacity .3s ease;
@@ -47,11 +47,11 @@
   &__link {
     display: flex;
     align-items: center;
-    padding: $mb-1 $mb-3;
+    padding: getVariable(mb-1) getVariable(mb-3);
   }
   &__icon {
-    font-size: $icon-font-size;
-    margin-right: $mb-1;
+    font-size: getVariable(icon-font-size);
+    margin-right: getVariable(mb-1);
   }
   &__text {
     text-transform: capitalize;
@@ -85,7 +85,7 @@
       transform: translate(70%, -50%);
     }
     &.active {
-      background-color: $primary-color;
+      background-color: getVariable(primary-color);
     }
   }
 }

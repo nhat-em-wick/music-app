@@ -7,9 +7,11 @@ import user from "../../assets/images/download.jpeg";
 const Header = (props) => {
   
   const location = useLocation()
+
   const handleActiveSidebar = () => {
     props.activeSidebar()
   };
+  
   const waveAnimateRef = useRef(null)
   
 

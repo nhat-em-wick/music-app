@@ -1,12 +1,12 @@
 @use '../../scss/' as *;
 
 .section {
-  padding: $mb-3 0;
+  padding: getVariable(mb-3) 0;
 }
 
 .section-title {
-  margin-bottom: $mb-2;
-  font-size: $h2-font-size;
-  color: $title-color;
+  margin-bottom: getVariable(mb-2);
+  font-size: getVariable(h2-font-size);
+  color: getVariable(title-color);
   text-transform: capitalize;
 }

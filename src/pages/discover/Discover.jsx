@@ -58,23 +58,17 @@ const Discover = (props) => {
       </Section>
       <Section>
         <SectionTitle title="Top bài hát nghe nhiều"/>
-        <Song />
-        <Song />
+        {
+          Array(6).fill(0).map((item, index) => (
+            <Song key={index}/>
+          ))
+        }
       </Section>
     </>
   );
 };
 
-const SlideItem = (props) => (
-  <>
-    <div
-      className="slide__item"
-      style={{
-        background: `url('https://photo-resize-zmp3.zmdcdn.me/w320_r1x1_webp/cover/d/a/c/6/dac69cd1300a635c193c0f03e8d6d617.jpg') top center / cover no-repeat`,
-      }}
-    ></div>
-  </>
-);
+
 
 Discover.propTypes = {};
 
