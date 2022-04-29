@@ -12,11 +12,17 @@
   z-index: 99;
   box-shadow: -1px 0 2px 0 rgba($color: #000000, $alpha: .2);
   gap: getVariable(mb-3);
+  @include mobile {
+    display: none;
+  }
   &__left {
-    flex-basis: 25%;
+    width: 25%;
     display: flex;
     gap: getVariable(mb-1);
     align-items: center;
+    @include maxWidthScreen(900px) {
+      width: max-content;
+    }
   }
   &__center {
     flex: 1;
@@ -24,12 +30,20 @@
     flex-direction: column;
     align-items: center;
     gap: getVariable(mb-1);
+
+    @include maxWidthScreen(900px) {
+      width: 60%;
+    }
+    
   }
   &__right {
-    flex-basis: 20%;
+    width: 20%;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: getVariable(mb-2);
+    gap: getVariable(mb-1);
+    
+    
   }
   &__thumb {
     width: 70px;
@@ -39,6 +53,11 @@
     align-items: center;
     position: relative;
     flex-shrink: 0;
+  }
+  &__information {
+    @include maxWidthScreen(900px) {
+      display: none;
+    }
   }
   &__name-song {
     font-size: getVariable(h3-font-size);
@@ -66,11 +85,12 @@
     }
     &.icon__random , &.icon__previous ,
     &.icon__next , &.icon__repeat,
-    &.icon__heart, &.icon__download  {
+    &.icon__heart, &.icon__download {
       width: 35px;
       height: 35px;
       border-radius: 50%;
       position: relative;
+      
       &>i {
         @include centerAbs();
       }
@@ -82,6 +102,9 @@
         visibility: visible;
       }
       
+    }
+    &.icon__random.active, &.icon__repeat.active, &.icon__heart.active {
+      color: getVariable(primary-color);
     }
     &.icon__play {
       width: 45px;
@@ -126,9 +149,15 @@
     }
     &.range__song {
       width: 400px;
+      @include maxWidthScreen(900px) {
+        width: 300px;
+      }
     }
     &.range__volume {
       width: 150px;
+      @include maxWidthScreen(900px) {
+        width: 100px;
+      }
     }
     
   }
@@ -139,11 +168,12 @@
     top: 0;
     height: 100%;
     border-radius: 10px;
+    left: 0;
     &.range-current__song {
-      width: 30%;
+      
     }
     &.range-current__volume {
-      width: 30%;
+      
     }
   }
   &__range-dot {
@@ -156,19 +186,92 @@
     top: -4px;
     left: calc(0% - 5px);
     border: 1px solid getVariable(border-color);
-    // display: none;
+    display: none;
+    
   }
-  &__range.range__song:hover .dot__song {
+  &__range.range__song:hover .dot__song,
+  &__range.range__volume:hover .dot__volume
+  {
     display: block;
   }
   &__time {
     font-size:getVariable(smaller-font-size);
   }
+  &__action {
+    @include centerFlex();
+    gap: getVariable(mb-2);
+  }
   
-  &__progress-bar-volumn {
+  &__progress-bar-volume {
     width: 150px;
     display: flex;
     align-items: center;
+    flex: 1;
   }
   
+}
+
+.play-music-mobile {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background-color: getVariable(bg-container);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: .25rem getVariable(mb-2);
+  gap: getVariable(mb-2);
+  z-index: 1;
+  box-shadow: -1px 0 3px rgba($color: #000000, $alpha: .1);
+  display: none;
+
+  @include mobile {
+    display: flex;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: getVariable(mb-1);
+    width: 60%;
+  }
+
+  &__cd-thumb {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  &__text {
+
+  }
+  &__name {
+    font-size: getVariable(small-font-size);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  &__singer {
+    font-size: getVariable(smaller-font-size);
+  }
+
+  &__right {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+    gap: getVariable(mb-2);
+    align-items: center;
+  }
+  &__icon {
+    font-size: 1.5rem;
+    
+    &.icon__play, &.icon__next {
+      font-size: 2rem;
+    }
+    &.icon__heart.active {
+      color: getVariable(primary-color);
+    }
+  }
 }

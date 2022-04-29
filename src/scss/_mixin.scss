@@ -11,6 +11,12 @@
   }
 }
 
+@mixin maxWidthScreen($value) {
+  @media only screen and (max-width: $value) {
+    @content;
+  }
+}
+
 @mixin centerAbs() {
   position: absolute;
   top: 50%;

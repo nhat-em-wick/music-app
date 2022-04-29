@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import './song.scss'
-function Song(props) {
+function Song (props) {
   return (
     <>
       <div className="song">
@@ -24,32 +24,32 @@ function Song(props) {
         </div>
         <div className="song__view-duration">
           <div className="song__view">
-            <span className="song__icon">
+            <div className="song__icon">
               <i className='bx bxs-music'></i>
-            </span>
+            </div>
             <span className="song__number">
               100000
             </span>
           </div>
           <div className="song__duration">
-            <span className="song__icon">
+            <div className="song__icon">
               <i className='bx bxs-time-five' ></i>
-            </span>
+            </div>
             <span className="song__number">04:56</span>
           </div>
         </div>
         <div className="song__action">
           <div className="song__favorite">
-            <span className="song__icon">
+            <div className="song__icon">
               <i className='bx bx-heart' ></i>
               <span className="tooltip-text">Yêu thích</span>
-            </span>
+            </div>
           </div>
           <div className="song__dot">
-            <span className="song__icon">
+            <div className="song__icon">
               <i className='bx bx-dots-horizontal-rounded'></i>
               <span className="tooltip-text">Khác</span>
-            </span>
+            </div>
           </div>
         </div>
       </div>

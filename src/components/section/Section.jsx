@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import './section.scss'
 const Section = props => {
+  
   return (
     <>
       <section className="section">
