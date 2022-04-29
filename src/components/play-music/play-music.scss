@@ -219,7 +219,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  padding: .25rem getVariable(mb-2);
+  padding: getVariable(mb-1) getVariable(mb-2);
   gap: getVariable(mb-2);
   z-index: 1;
   box-shadow: -1px 0 3px rgba($color: #000000, $alpha: .1);
@@ -237,8 +237,8 @@
   }
 
   &__cd-thumb {
-    width: 35px;
-    height: 35px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
@@ -272,6 +272,150 @@
     }
     &.icon__heart.active {
       color: getVariable(primary-color);
+    }
+  }
+}
+
+.play-music-mobile-full {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  bottom: -100%;
+  left: 0;
+  background-color: getVariable(bg-container);
+  z-index: 100;
+  padding: getVariable(mb-3) getVariable(mb-2);
+  display: flex;
+  flex-direction: column;
+  gap: getVariable(mb-4);
+  transition: bottom .3s linear, opacity .3s ease;
+  opacity: 0;
+  display: none;
+  &.show {
+    bottom: 0;
+    opacity: 1;
+  }
+
+  @include mobile {
+    display: flex;
+  }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    &__icon {
+      font-size: 1.8rem;
+      margin-right: getVariable(mb-2);
+    }
+    &__text {
+      flex: 1;
+    }
+  }
+  &__name {
+    font-weight: 500;
+    font-size: 1rem;
+  }
+  &__singer {
+    font-size: getVariable(small-font-size);
+  }
+  &__content {
+    flex: 1;
+    padding-top: getVariable(mb-4);
+  }
+  &__cd-thumb {
+    width: 300px;
+    height: 300px;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-bottom: getVariable(mb-3);
+  }
+  &__progress-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: getVariable(mb-2);
+    margin: getVariable(mb-2) 0;
+  }
+  &__time {
+    
+  }
+  &__range {
+    flex: 1;
+    height: 4px;
+    background-color: getVariable(border-color);
+    position: relative;
+    border-radius: 20px;
+  }
+  &__range-current-song {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+   
+    height: 100%;
+    background-color: getVariable(primary-color);
+    border-radius: 20px;
+  }
+  &__dot-current-song {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: calc(0% - 5px);
+    width: 15px;
+    height: 15px;
+    background-color: getVariable(primary-color);
+    border-radius: 50%;
+    border: 1px solid rgba($color: #000000, $alpha: .2);
+  }
+  &__action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__icon {
+    font-size: 1.7rem;
+    width: 50px;
+    height: 50px;
+    @include centerFlex;
+    border-radius: 50%;
+    
+    &.icon__next, &.icon__previous {
+      font-size: 2.5rem;
+    }
+    &.icon__random.active, &.icon__repeat.active, &.icon__heart.active {
+      color: getVariable(primary-color);
+    }
+    &.icon__play {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2.5rem;
+      position: relative;
+      
+      
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        padding: .25rem;
+        border-radius: 50%;
+        pointer-events: none;
+        background-image: linear-gradient(to right bottom, getVariable(primary-color), #ff6bcb);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask:  linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+      }
     }
   }
 }
