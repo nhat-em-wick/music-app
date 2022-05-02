@@ -1,33 +1,23 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, memo } from "react";
 import PropTypes from "prop-types";
 import { Link, useLocation } from "react-router-dom";
 
 import "./header.scss";
 import user from "../../assets/images/download.jpeg";
-const Header = (props) => {
-  
-  const location = useLocation()
-
-  const handleActiveSidebar = () => {
-    props.activeSidebar()
-  };
-  
-  const waveAnimateRef = useRef(null)
-  
-
-
+const Header = ({ onActiveSidebar }) => {
+  console.log('header')
   return (
     <>
       <div className="header">
         <div className="header__left">
           <div
             className="header__menu"
-            onClick={() => handleActiveSidebar()}
+            onClick={onActiveSidebar}
           >
             <div className="header__hamburger--toggle"></div>
           </div>
           <a className="header__logo">
-            <div ref={waveAnimateRef} className="header__animate">
+            <div className="header__animate">
               <span className="wave"></span>
               <span className="wave"></span>
               <span className="wave"></span>
@@ -68,12 +58,12 @@ const Header = (props) => {
         </div>
         <div className="header__right">
           <div className="header__auth">
-            <div className="header__login">
+            <Link to='dang-nhap' className="header__login">
               Đăng nhập
-            </div>
-            <div className="header__register">
+            </Link>
+            <Link to='dang-ki' className="header__register">
               Đăng kí
-            </div>
+            </Link>
           </div>
           <div className="header__no-user-mobile">
             <i className='bx bxs-user'></i>
@@ -97,4 +87,4 @@ Header.propTypes = {
   activeSidebar: PropTypes.func
 };
 
-export default Header;
+export default memo(Header);

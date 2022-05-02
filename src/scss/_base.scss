@@ -74,6 +74,10 @@ img {
   flex-shrink: 0;
 }
 
+input:focus {
+  outline: none;
+}
+
 .tooltip-text {
   position: absolute;
   background-color: #292929;

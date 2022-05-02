@@ -1,0 +1,19 @@
+@use '../../scss/' as *;
+
+.footer {
+  width: 100%;
+  height: 4rem;
+  background-color: getVariable(bg-body);
+  padding: getVariable(mb-2) 10rem;
+  transition: padding .3s ease;
+  
+  &.shrink {
+    padding-left: calc(getVariable(width-sidebar) + getVariable(mb-4));
+    padding-right: getVariable(mb-4);
+  }
+  &-text {
+    text-align: center;
+    font-size: getVariable(smaller-font-size);
+    color: getVariable(text-color-light);
+  }
+}

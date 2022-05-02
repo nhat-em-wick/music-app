@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import PropTypes from "prop-types";
 import HeroSlider from "../../components/hero-slider/HeroSlider";
 import Section, {SectionTitle} from "../../components/section/Section";
@@ -9,6 +9,7 @@ import Card from "../../components/card/Card";
 import "./discover.scss";
 
 const Discover = (props) => {
+
   return (
     <>
       <HeroSlider/>

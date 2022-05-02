@@ -27,16 +27,26 @@ const HeroSlider = (props) => {
           swiper.params.navigation.nextEl = nextSlideRef.current;
         }}
         loop={true}
+        freeMode={true}
         spaceBetween={50}
         autoplay={{
           delay: 2500,
           disableOnInteraction: false,
         }}
         breakpoints={{
-          400: {
+          200: {
             slidesPerView: 1,
+            spaceBetweenSlides: 30
           },
-          
+        // when window width is <= 999px
+          600: {
+            slidesPerView: 2,
+            spaceBetweenSlides: 40
+          },
+          1023: {
+            slidesPerView: 3,
+            spaceBetweenSlides: 50
+          }
         }}
       >
         <SwiperSlide>
@@ -54,7 +64,7 @@ const HeroSlider = (props) => {
             <div
               className="slide__item"
               style={{
-                background: `url('https://photo-resize-zmp3.zmdcdn.me/w320_r1x1_webp/cover/d/a/c/6/dac69cd1300a635c193c0f03e8d6d617.jpg') top center / cover no-repeat`,
+                background: `url('https://photo-resize-zmp3.zmdcdn.me/w320_r1x1_webp/cover/d/a/c/6/dac69cd1300a635c193c0f03e8d6d617.jpg') center right / cover no-repeat`,
               }}
             ></div>
           </div>
@@ -64,7 +74,7 @@ const HeroSlider = (props) => {
             <div
               className="slide__item"
               style={{
-                background: `url('https://photo-resize-zmp3.zmdcdn.me/w320_r1x1_webp/cover/d/a/c/6/dac69cd1300a635c193c0f03e8d6d617.jpg') top center / cover no-repeat`,
+                background: `url('https://photo-resize-zmp3.zmdcdn.me/w320_r1x1_webp/cover/d/a/c/6/dac69cd1300a635c193c0f03e8d6d617.jpg') center right / cover no-repeat`,
               }}
             ></div>
           </div>

@@ -1,0 +1,43 @@
+@use '../../scss/' as *;
+
+.form {
+
+  &-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: getVariable(mb-1);
+
+    &.error &__label {
+      color: getVariable(color-error);
+    }
+
+    &.error &__input {
+      border-color: getVariable(color-error);
+    }
+
+    &__label {
+      
+    }
+    &__input {
+      width: 500px;
+      border: 1px solid getVariable(border-color);
+      padding: .7rem getVariable(mb-2);
+      border-radius: 5px;
+      font-size: getVariable(normal-font-size);
+      transition: border-color .3s ease;
+      background-color: getVariable(bg-container);
+      color: getVariable(text-color);
+      margin: getVariable(mb-1) 0;
+      &:focus {
+        border-color: getVariable(primary-color);
+      }
+    }
+
+    &__error {
+      font-size: getVariable(small-font-size);
+      color: getVariable(color-error);
+    }
+    
+  }
+}

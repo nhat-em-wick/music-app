@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, memo } from "react";
 import PropTypes from "prop-types";
 import { Link, useLocation } from "react-router-dom";
 import { menuBrowse, menuLibrary } from "../../constant";
@@ -27,9 +27,10 @@ const Sidebar = (props) => {
   const handleChangeTheme = () => {
     const icon = changeThemeRef.current.querySelector('.change-theme__icon')
     icon.classList.toggle('active')
-
     props.changeTheme()
   }
+
+ 
 
   return (
     <>
@@ -93,7 +94,7 @@ const Sidebar = (props) => {
 };
 
 Sidebar.propTypes = {
-  closeSlidebar: PropTypes.func,
+  closeSidebar: PropTypes.func,
 };
 
-export default Sidebar;
+export default memo(Sidebar);

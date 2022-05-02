@@ -12,6 +12,7 @@
   z-index: 99;
   box-shadow: -1px 0 2px 0 rgba($color: #000000, $alpha: .2);
   gap: getVariable(mb-3);
+  // display: none;
   @include mobile {
     display: none;
   }
@@ -53,8 +54,28 @@
     align-items: center;
     position: relative;
     flex-shrink: 0;
+    transition: .5s linear;
+    img {
+      animation: spinner 10s linear infinite 1s;
+      -webkit-animation-play-state: paused;
+        -moz-animation-play-state: paused;
+        -ms-animation-play-state: paused;
+        -o-animation-play-state: paused;
+        animation-play-state: paused;
+      &.playing {
+        -webkit-animation-play-state: running;
+        -moz-animation-play-state: running;
+        -ms-animation-play-state: running;
+        -o-animation-play-state: running;
+        animation-play-state: running;
+      }
+    }
   }
   &__information {
+    width: 50%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     @include maxWidthScreen(900px) {
       display: none;
     }
@@ -62,11 +83,9 @@
   &__name-song {
     font-size: getVariable(h3-font-size);
     color: getVariable(text-color);
-    display: block;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
+    display: inline-block;
+    white-space: nowrap;
+    animation: slipText 8s linear infinite;
   }
   &__singer {
     font-size: getVariable(small-font-size);
@@ -80,12 +99,12 @@
   &__icon {
     font-size: 1.5rem;
     cursor: pointer;
-    &.icon__previous, &.icon__next {
+    &.icon--previous, &.icon--next {
       font-size: 2rem;
     }
-    &.icon__random , &.icon__previous ,
-    &.icon__next , &.icon__repeat,
-    &.icon__heart, &.icon__download {
+    &.icon--random , &.icon--previous ,
+    &.icon--next , &.icon--repeat,
+    &.icon--heart, &.icon--download {
       width: 35px;
       height: 35px;
       border-radius: 50%;
@@ -103,10 +122,10 @@
       }
       
     }
-    &.icon__random.active, &.icon__repeat.active, &.icon__heart.active {
+    &.icon--random.active, &.icon--repeat.active, &.icon--heart.active {
       color: getVariable(primary-color);
     }
-    &.icon__play {
+    &.icon--play {
       width: 45px;
       height: 45px;
       border-radius: 50%;
@@ -144,6 +163,7 @@
     margin: 0 getVariable(mb-2);
     cursor: pointer;
     width: 150px;
+    
     &:hover {
       height: 6px;
     }
@@ -169,6 +189,7 @@
     height: 100%;
     border-radius: 10px;
     left: 0;
+    
     &.range-current__song {
       
     }
@@ -186,13 +207,12 @@
     top: -4px;
     left: calc(0% - 5px);
     border: 1px solid getVariable(border-color);
-    display: none;
-    
+    opacity: 0;
   }
   &__range.range__song:hover .dot__song,
   &__range.range__volume:hover .dot__volume
   {
-    display: block;
+    opacity: 1;
   }
   &__time {
     font-size:getVariable(smaller-font-size);
@@ -242,6 +262,21 @@
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
+    img {
+      animation: spinner 10s linear infinite 1s;
+      -webkit-animation-play-state: paused;
+        -moz-animation-play-state: paused;
+        -ms-animation-play-state: paused;
+        -o-animation-play-state: paused;
+        animation-play-state: paused;
+      &.playing {
+        -webkit-animation-play-state: running;
+        -moz-animation-play-state: running;
+        -ms-animation-play-state: running;
+        -o-animation-play-state: running;
+        animation-play-state: running;
+      }
+    }
   }
   &__text {
 
@@ -267,10 +302,10 @@
   &__icon {
     font-size: 1.5rem;
     
-    &.icon__play, &.icon__next {
+    &.icon--play, &.icon--next {
       font-size: 2rem;
     }
-    &.icon__heart.active {
+    &.icon--heart.active {
       color: getVariable(primary-color);
     }
   }
@@ -282,7 +317,6 @@
   height: 100%;
   bottom: -100%;
   left: 0;
-  background-color: getVariable(bg-container);
   z-index: 100;
   padding: getVariable(mb-3) getVariable(mb-2);
   display: flex;
@@ -291,6 +325,7 @@
   transition: bottom .3s linear, opacity .3s ease;
   opacity: 0;
   display: none;
+  color: #fff;
   &.show {
     bottom: 0;
     opacity: 1;
@@ -299,7 +334,17 @@
   @include mobile {
     display: flex;
   }
-
+  .backdrop-filter {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    background-color: rgba($color: #000000, $alpha: .5);
+    z-index: -1;
+  }
   &__top {
     display: flex;
     align-items: center;
@@ -329,6 +374,22 @@
     overflow: hidden;
     border-radius: 50%;
     margin-bottom: getVariable(mb-3);
+
+    img {
+      animation: spinner 10s linear infinite 1s;
+      -webkit-animation-play-state: paused;
+        -moz-animation-play-state: paused;
+        -ms-animation-play-state: paused;
+        -o-animation-play-state: paused;
+        animation-play-state: paused;
+      &.playing {
+        -webkit-animation-play-state: running;
+        -moz-animation-play-state: running;
+        -ms-animation-play-state: running;
+        -o-animation-play-state: running;
+        animation-play-state: running;
+      }
+    }
   }
   &__progress-bar {
     display: flex;
@@ -343,7 +404,7 @@
   &__range {
     flex: 1;
     height: 4px;
-    background-color: getVariable(border-color);
+    background-color: rgba(#fff, .1);
     position: relative;
     border-radius: 20px;
   }
@@ -386,13 +447,13 @@
     @include centerFlex;
     border-radius: 50%;
     
-    &.icon__next, &.icon__previous {
+    &.icon--next, &.icon--previous {
       font-size: 2.5rem;
     }
-    &.icon__random.active, &.icon__repeat.active, &.icon__heart.active {
+    &.icon--random.active, &.icon--repeat.active, &.icon--heart.active {
       color: getVariable(primary-color);
     }
-    &.icon__play {
+    &.icon--play {
       width: 55px;
       height: 55px;
       border-radius: 50%;
@@ -417,5 +478,44 @@
         mask-composite: exclude;
       }
     }
+  }
+}
+
+@keyframes spinner {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spinner {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes spinner {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@-o-keyframes spinner {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@-ms-keyframes sinner {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slipText {
+  0%{
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
   }
 }

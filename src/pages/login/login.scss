@@ -1,0 +1,42 @@
+@use '../../scss/' as *;
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.login {
+  margin-top: getVariable(mb-5);
+  
+  &-title {
+    margin-bottom: getVariable(mb-3);
+    font-size: 2rem;
+  }
+  &-btn {
+    padding: getVariable(mb-1) getVariable(mb-3);
+    border: 1px solid getVariable(primary-color);
+    width: fit-content;
+    border-radius: 20px;
+    color: getVariable(primary-color);
+    text-align: center;
+    cursor: pointer;
+    transition: .3s ease;
+    &:hover {
+      background-color: getVariable(primary-color);
+      color: #fff;
+    }
+  }
+  &-link {
+    margin-top: getVariable(mb-2);
+
+    &__forgot, &__register {
+      transition: .3s ease;
+      cursor: pointer;
+      width: fit-content;
+      margin-bottom: getVariable(mb-1);
+      &:hover {
+        color: getVariable(primary-color);
+      }
+    }
+  }
+}

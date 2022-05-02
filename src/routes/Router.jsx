@@ -9,6 +9,8 @@ import Radio from '../pages/radio/Radio'
 import Playlists from '../pages/playlists/Playlists'
 import Favorite from '../pages/favorite/Favorite'
 import Stream from '../pages/stream/Stream'
+import Login from '../pages/login/Login'
+import Register from '../pages/register/Register'
 const Router = () => {
   return (
     <BrowserRouter>
@@ -21,6 +23,9 @@ const Router = () => {
           <Route path='truc-tiep' element={<Stream/>}/>
           <Route path='danh-sach-phat' element={<Playlists/>}/> 
           <Route path='yeu-thich' element={<Favorite/>}/> 
+          <Route path='dang-nhap' element={<Login/>}/>
+          <Route path='dang-ki' element={<Register/>}/>
+
         </Route>
       </Routes>
     </BrowserRouter>
