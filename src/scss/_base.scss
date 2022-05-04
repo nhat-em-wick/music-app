@@ -92,6 +92,8 @@ input:focus {
   opacity: 0;
   visibility: hidden;
   transition: opacity .3s ease;
+  z-index: 1;
+  
   &::before {
     position: absolute;
     content: '';

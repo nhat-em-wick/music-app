@@ -2,14 +2,15 @@ import React, { useEffect, useRef, useState,useMemo, memo, useCallback } from "r
 import PropTypes from "prop-types";
 import anime from 'animejs/lib/anime.es.js';
 
-import { songs } from "../../constant";
+
 import "./play-music.scss";
 
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { mute } from "../../redux/audio/audioSlice";
 
 
 const PlayMusic = ({
+  songs,
   audioRef,
   currentIndex,
   currentTime,
@@ -17,7 +18,6 @@ const PlayMusic = ({
   favorite,
   isRandom,
   isRepeat,
-  isMute,
   onRepeat,
   onRandom,
   updateCurrentTimeMouseTouch,
@@ -40,7 +40,9 @@ const PlayMusic = ({
   const currentVolumeRef = useRef(null);
   const currentCircleVolumeRef = useRef(null);
 
-  const [mute, setMute] = useState(isMute)
+  const dispatch = useDispatch()
+
+  const isMute = useSelector(state => state.audio.isMute)
   
   const [openMusicPlayMB, setOpenMusicPlayMB] = useState(false);
 
@@ -139,7 +141,9 @@ const PlayMusic = ({
         isDragVolumeRef.current
       );
       if(percent <= 0) {
-        onMute()
+        dispatch(mute(true))
+      }else {
+        dispatch(mute(false))
       }
       audioRef.current.volume = percent;
     }
@@ -159,12 +163,12 @@ const PlayMusic = ({
 
   return (
     <>
-      <div className="play-music">
+      <div className={`play-music ${songs.length > 0 ? 'active' :''}`}>
         <div className="play-music__left">
           <div className="play-music__thumb">
             <img
               ref={cdThumbRef}
-              src={songs[currentIndex].thumb}
+              src={songs[currentIndex]?.thumb}
               alt=""
             />
             <div className="play-music__wave">
@@ -177,10 +181,10 @@ const PlayMusic = ({
           </div>
           <div className="play-music__information">
             <h3 className="play-music__name-song">
-              {songs[currentIndex].name}
+              {songs[currentIndex]?.name}
             </h3>
             <span className="play-music__singer">
-              {songs[currentIndex].singer}
+              {songs[currentIndex]?.singer}
             </span>
           </div>
         </div>
@@ -299,6 +303,7 @@ const PlayMusic = ({
         </div>
       </div>
       <PlayMusicMobile
+      songs={songs}
         currentIndex={currentIndex}
         isPlaying={isPlaying}
         onPlay={onPlay}
@@ -309,6 +314,7 @@ const PlayMusic = ({
         audioRef={audioRef}
       />
       <PlayMusicMobileFull
+        songs={songs}
         audioRef={audioRef}
         currentIndex={currentIndex}
         currentTime={currentTime}
@@ -335,6 +341,7 @@ const PlayMusic = ({
 };
 
 const PlayMusicMobile = ({
+  songs,
   currentIndex,
   isPlaying,
   onPlay,
@@ -361,16 +368,16 @@ const PlayMusicMobile = ({
         <div onClick={() => openFullMB()} className="play-music-mobile__left">
           <div className="play-music-mobile__cd-thumb">
             <img ref={cdThumbRef}
-              src={songs[currentIndex].thumb}
+              src={songs[currentIndex]?.thumb}
               alt=""
             />
           </div>
           <div className="play-music-mobile__text">
             <div className="play-music-mobile__name">
-              {songs[currentIndex].name}
+              {songs[currentIndex]?.name}
             </div>
             <div className="play-music-mobile__singer">
-              {songs[currentIndex].singer}
+              {songs[currentIndex]?.singer}
             </div>
           </div>
         </div>
@@ -410,6 +417,7 @@ const PlayMusicMobile = ({
 };
 
 const PlayMusicMobileFull = ({
+  songs,
   audioRef,
   currentIndex,
   currentTime,
@@ -512,7 +520,7 @@ const PlayMusicMobileFull = ({
       <div
         className={`play-music-mobile-full ${openMusicPlayMB ? "show" : ""}`}
         style={{
-          background: `url(${songs[currentIndex].thumb}) no-repeat center / cover`,
+          background: `url(${songs[currentIndex]?.thumb}) no-repeat center / cover`,
         }}
       >
         <div className="backdrop-filter"></div>
@@ -525,18 +533,18 @@ const PlayMusicMobileFull = ({
           </div>
           <div className="play-music-mobile-full__top__text">
             <div className="play-music-mobile-full__name">
-              {songs[currentIndex].name}
+              {songs[currentIndex]?.name}
             </div>
             <div className="play-music-mobile-full__singer">
-              {songs[currentIndex].singer}
+              {songs[currentIndex]?.singer}
             </div>
           </div>
         </div>
         <div className="play-music-mobile-full__content">
           <div className="play-music-mobile-full__cd-thumb">
             <img ref={cdThumbRef}
-              src={songs[currentIndex].thumb}
-              alt={songs[currentIndex].name}
+              src={songs[currentIndex]?.thumb}
+              alt={songs[currentIndex]?.name}
             />
           </div>
           <div className="play-music-mobile-full__progress-bar">

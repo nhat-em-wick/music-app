@@ -4,7 +4,7 @@
   width: 100%;
   position: fixed;
   left: 0;
-  bottom: 0;
+  bottom: -100%;
   background-color: getVariable(bg-container);
   padding: getVariable(mb-1) getVariable(mb-2);
   display: flex;
@@ -12,7 +12,10 @@
   z-index: 99;
   box-shadow: -1px 0 2px 0 rgba($color: #000000, $alpha: .2);
   gap: getVariable(mb-3);
-  // display: none;
+  transition: bottom .7s cubic-bezier(0.075, 0.82, 0.165, 1);
+  &.active {
+    bottom: 0;
+  }
   @include mobile {
     display: none;
   }
@@ -207,12 +210,12 @@
     top: -4px;
     left: calc(0% - 5px);
     border: 1px solid getVariable(border-color);
-    opacity: 0;
+    display: none;
   }
   &__range.range__song:hover .dot__song,
   &__range.range__volume:hover .dot__volume
   {
-    opacity: 1;
+    display: block;
   }
   &__time {
     font-size:getVariable(smaller-font-size);

@@ -1,15 +1,20 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import { Outlet, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
 import Header from "../header/Header";
 import Sidebar from "../sidebar/Sidebar";
 import PlayMusic from "../play-music/PlayMusic";
 import Footer from "../footer/Footer";
-import { songs } from "../../constant";
 
 import "./layout.scss";
+import { list, currentSong, index, repeat, random, listPlayed, clearListPlayed } from "../../redux/music/musicSlice";
+import { playing, updateCurrentTime, updateDuration, mute } from "../../redux/audio/audioSlice";
+
 const Layout = (props) => {
   const location = useLocation();
+  const dispatch = useDispatch()
   const [activeSidebar, setActiveSidebar] = useState(true);
   const [activeSidebarMobile, setActiveSidebarMobile] = useState(false);
   const [darkTheme, setDarkTheme] = useState(false)
@@ -23,28 +28,49 @@ const Layout = (props) => {
     setDarkTheme(prev => !prev);
   }, []);
   
-  const themeRef = useRef(null);
+  
   const audioRef = useRef(null);
-  const songsPlayed = useRef([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [duration, setDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [isMute, setIsMute] = useState(false);
-  const [isRandom, setIsRandom] = useState(false);
-  const [isRepeat, setIsRepeat] = useState(false);
   const [favorite, setFavorite] = useState(false);
 
+  // selector
+
+  const music = useSelector(state => state.music)
+  const audio = useSelector(state => state.audio)
+
+  const currentIndex = useSelector(state => state.music.currentIndexSong)
+  
+  const songs = useSelector(state => state.music.list)
+  const isPlaying = useSelector(state => state.audio.isPlay)
+  const currentTime = useSelector(state => state.audio.currentTime)
+  const duration = useSelector(state => state.audio.duration)
+  const isMute = useSelector(state => state.audio.isMute)
+  const isRepeat = useSelector(state => state.music.isRepeat)
+  const isRandom = useSelector(state => state.music.isRandom)
+  const songsPlayed = useSelector(state => state.music.songsPlayed)
+
+  // call api
+  useEffect(() => {
+    
+  }, [])
+
   const handlePlay = () => {
-    setIsPlaying(!isPlaying);
+    dispatch(playing(!isPlaying))
   };
 
+  const handleRandom = () => {
+    dispatch(random(!isRandom))
+  }
+
+  const handleRepeat = () => {
+    dispatch(repeat(!isRepeat))
+  }
+
   const updateCurrentTimeMouseTouch = (value) => {
-    setCurrentTime(value);
+    dispatch(updateCurrentTime(value));
   };
 
   const handleRangeUpdate = (currentTimeRef, currentCircle) => {
-    const seconds = Math.floor(currentTime);
+    const seconds = currentTime;
     const percent = (seconds / duration) * 100;
     currentTimeRef.current.style.width = percent + "%";
     currentCircle.current.style.left = `calc(${percent + "%"} - 5px)`;
@@ -53,6 +79,7 @@ const Layout = (props) => {
   useEffect(() => {
     if (isPlaying) {
       audioRef.current.play();
+      dispatch(currentSong(songs[currentIndex]))
     } else {
       audioRef.current.pause();
     }
@@ -60,52 +87,59 @@ const Layout = (props) => {
 
   useEffect(() => {
     if (isRandom) {
-      songsPlayed.current.push(currentIndex);
+      dispatch(listPlayed(currentIndex))
     } else {
-      while (songsPlayed.current.length > 0) {
-        songsPlayed.current.pop();
-      }
+      dispatch(clearListPlayed())
     }
-  }, [currentIndex]);
+  }, [currentIndex, isRandom]);
+
+  const checkRandomNextSong = () => {
+    if(songsPlayed.length >= songs.length) {
+      dispatch(clearListPlayed())
+    }else {
+      handleRandomSongs();
+    }
+  }
 
   // change song
   const nextSong = () => {
     if (isRandom) {
-      handleRandomSongs();
+      checkRandomNextSong()
     } else {
-      setCurrentIndex(currentIndex + 1 >= songs.length ? 0 : currentIndex + 1);
+      dispatch(index(currentIndex + 1 >= songs.length ? 0 : currentIndex + 1));
     }
-    setIsPlaying(true);
+    dispatch(playing(true))
   };
+
   const prevSong = () => {
     if (isRandom) {
-      handleRandomSongs();
+      checkRandomNextSong()
     } else {
-      setCurrentIndex(
+      dispatch(index(
         currentIndex - 1 < 0 ? songs.length - 1 : currentIndex - 1
-      );
+      ));
     }
-    setIsPlaying(true);
+    dispatch(playing(true))
   };
 
   // event audio
   const handleLoadMetadata = () => {
     const seconds = Math.floor(audioRef.current.duration);
-    setDuration(seconds);
+    dispatch(updateDuration(seconds));
   };
 
   const handleOnTimeAudio = () => {
     const seconds = Math.floor(audioRef.current.currentTime);
-    setCurrentTime(seconds);
+    dispatch(updateCurrentTime(seconds));
   };
 
   const handleEnded = () => {
     if (isRepeat) {
       audioRef.current.play();
-    } else if (isRandom && songsPlayed.current.length === songs.length) {
-      setIsPlaying(false);
-    } else if (currentIndex === songs.length - 1) {
-      setIsPlaying(false);
+    } else if (isRandom && songsPlayed.length === songs.length) {
+      dispatch(playing(false))
+    } else if (!isRandom && currentIndex === songs.length - 1) {
+      dispatch(playing(false))
     } else {
       nextSong();
     }
@@ -113,7 +147,7 @@ const Layout = (props) => {
 
   const handleMute = () => {
     audioRef.current.muted = !isMute;
-    setIsMute(!isMute);
+    dispatch(mute(!isMute));
   };
 
   // ======================================================================== //
@@ -130,16 +164,11 @@ const Layout = (props) => {
     let newIndex;
     do {
       newIndex = Math.floor(Math.random() * songs.length);
-      if (songsPlayed.current.length >= songs.length) {
-        while (songsPlayed.current.length > 0) {
-          songsPlayed.current.pop();
-        }
-      }
     } while (
       newIndex === currentIndex ||
-      songsPlayed.current.includes(newIndex)
+      songsPlayed.includes(newIndex)
     );
-    setCurrentIndex(newIndex);
+    dispatch(index(newIndex));
   };
 
   const handleFavorite = () => {
@@ -176,6 +205,7 @@ const Layout = (props) => {
         </div>
         <Footer shrink={activeSidebar} />
         <PlayMusic
+          songs={songs}
           audioRef={audioRef}
           currentIndex={currentIndex}
           currentTime={formatTime(currentTime)}
@@ -185,10 +215,10 @@ const Layout = (props) => {
           isRepeat={isRepeat}
           isPlaying={isPlaying}
           isMute={isMute}
-          onMute={() => handleMute()}
+          onMute={handleMute}
           onPlay={handlePlay}
-          onRandom={() => setIsRandom(!isRandom)}
-          onRepeat={() => setIsRepeat(!isRepeat)}
+          onRandom={handleRandom}
+          onRepeat={handleRepeat}
           onPrevSong={prevSong}
           onNextSong={nextSong}
           onFavorite={() => setFavorite(!favorite)}
@@ -201,7 +231,7 @@ const Layout = (props) => {
         />
         <audio
           ref={audioRef}
-          src={songs[currentIndex].src}
+          src={songs[currentIndex]?.src}
           onEnded={() => handleEnded()}
           onLoadedMetadata={() => handleLoadMetadata()}
           onTimeUpdate={() => handleOnTimeAudio()}

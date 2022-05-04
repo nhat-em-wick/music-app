@@ -29,6 +29,9 @@
       background-color: getVariable(bg-container);
       color: getVariable(text-color);
       margin: getVariable(mb-1) 0;
+      @include mobile {
+        width: 100%;
+      }
       &:focus {
         border-color: getVariable(primary-color);
       }

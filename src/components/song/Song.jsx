@@ -1,26 +1,51 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { useSelector, useDispatch } from "react-redux";
+import { playing, updateCurrentTime, updateDuration, mute } from "../../redux/audio/audioSlice";
+import { list, currentSong, index, repeat, random, listPlayed, clearListPlayed } from "../../redux/music/musicSlice";
+
 import './song.scss'
-function Song (props) {
+function Song ({song, indexSong, songs}) {
+  const dispatch = useDispatch()
+  const currentSong = useSelector(state => state.music.currentSong)
+  const isPlay = useSelector(state => state.audio.isPlay)
+  
+  const handlePlaySong = (currentIndex) => {
+    dispatch(playing(true))
+    dispatch(index(currentIndex))
+    dispatch(list(songs))
+  }
+
+  const handleStopSong = () => {
+    dispatch(playing(false))
+  }
+
   return (
     <>
-      <div className="song">
+      <div className={`song ${currentSong?.id === song.id ? 'active' : ''}`}>
         <div className="song__left">
-          <div className="song__thumb">
+          <div  className="song__thumb">
             <div className="song__thumb__overlay"></div>
-            <span className="song__icon">
+            {
+              (currentSong?.id === song.id) && isPlay ? 
+            <div onClick={() => handleStopSong()} className={`wave-animation`}>
+              <span className="wave"></span>
+              <span className="wave"></span>
+              <span className="wave"></span>
+            </div> : <span onClick={() => handlePlaySong(indexSong)} className="song__icon">
               <i className="bx bx-play"></i>
             </span>
-            <img src="https://photo-resize-zmp3.zmdcdn.me/w320_r1x1_webp/cover/d/a/c/6/dac69cd1300a635c193c0f03e8d6d617.jpg" alt="" />
+            }
+            <img src={song.thumb} alt="" />
           </div>
           <div className="song__information">
-            <div className="song__name">Despacito</div>
-            <div className="song__singer">Mr.Siro</div>
+            <div className="song__name">{song.name}</div>
+            <div className="song__singer">{song.singer}</div>
           </div>
         </div>
         <div className="song__album">
-          <div className="song__album__name">Khong the yeu them mot ai</div>
+          <div className="song__album__name">{song.album}</div>
         </div>
         <div className="song__view-duration">
           <div className="song__view">
@@ -58,7 +83,9 @@ function Song (props) {
 }
 
 Song.propTypes = {
-  item: PropTypes.object,
+  song: PropTypes.object,
+  songs: PropTypes.array,
+  indexSong: PropTypes.number
 };
 
 export default Song;

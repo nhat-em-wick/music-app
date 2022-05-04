@@ -35,17 +35,20 @@ const Register = (props) => {
             label="Nhập lại mật khẩu"
           ></Form.FormGroup>
         </Form>
-        <div className="register-btn">
+        <div className="register-bottom">
+          <div className="register-btn">
           Đăng kí
-        </div>
-        <div className="register-link">
-          <div className="register-link__text">
-            Đã có tài khoản ? 
           </div>
-          <div className="register-link__login">
-             Đăng nhập
+          <div className="register-link">
+            <div className="register-link__text">
+              Đã có tài khoản ? 
+            </div>
+            <div className="register-link__login">
+              Đăng nhập
+            </div>
           </div>
         </div>
+        
       </div>
     </div>
   );

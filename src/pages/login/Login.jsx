@@ -24,17 +24,20 @@ const Login = (props) => {
             textError=""
           ></Form.FormGroup>
         </Form>
-        <div className="login-btn">
-          Đăng nhập
-        </div>
-        <div className="login-link">
-          <div className="login-link__forgot">
-            Quên mật khẩu ?
+        <div className="login-bottom">
+            <div className="login-btn">
+            Đăng nhập
           </div>
-          <div className="login-link__register">
-            Đăng kí tài khoản
+          <div className="login-link">
+            <div className="login-link__forgot">
+              Quên mật khẩu ?
+            </div>
+            <div className="login-link__register">
+              Đăng kí tài khoản
+            </div>
           </div>
         </div>
+        
       </div>
     </div>
   );

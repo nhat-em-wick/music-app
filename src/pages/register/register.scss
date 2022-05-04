@@ -3,14 +3,31 @@
 .register-wrapper {
   display: flex;
   justify-content: center;
+
+  @include mobile {
+    display: block;
+  }
 }
 
 .register {
   margin-top: getVariable(mb-5);
-  
+  @include mobile {
+    margin-top: 0;
+  }
   &-title {
     margin-bottom: getVariable(mb-3);
     font-size: 2rem;
+
+    @include maxWidthScreen(900px) {
+      text-align: center;
+    }
+  }
+  &-bottom {
+    display: flex;
+    flex-direction: column;
+    @include mobile {
+      align-items: center;
+    }
   }
   &-btn {
     padding: getVariable(mb-1) getVariable(mb-3);
@@ -21,6 +38,9 @@
     text-align: center;
     cursor: pointer;
     transition: .3s ease;
+    @include mobile {
+      width: 100%;
+    }
     &:hover {
       background-color: getVariable(primary-color);
       color: #fff;

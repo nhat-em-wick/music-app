@@ -5,7 +5,15 @@ import { Link, useLocation } from "react-router-dom";
 import "./header.scss";
 import user from "../../assets/images/download.jpeg";
 const Header = ({ onActiveSidebar }) => {
-  console.log('header')
+  
+  const [showSearchMobile, setShowSearchMobile] = useState(false)
+  const searchMobileRef = useRef(null)
+
+  const handleShowSearchMobile = () => {
+    setShowSearchMobile(!showSearchMobile)
+    searchMobileRef.current.focus()
+  }
+
   return (
     <>
       <div className="header">
@@ -41,17 +49,18 @@ const Header = ({ onActiveSidebar }) => {
               <i className="bx bx-search"></i>
             </span>
           </div>
-          <span className="header__icon-search--toggle">
+          <span onClick={() => handleShowSearchMobile()} className="header__icon-search--toggle">
             <i className="bx bx-search"></i>
           </span>
-          <div className="header__search-mobile">
+          <div className={`header__search-mobile ${showSearchMobile ? 'active' : ''}`}>
             <input
+              ref={searchMobileRef}
               type="search"
               name="search"
               placeholder="Tìm kiếm..."
               className="header__search-mobile__input"
             />
-            <span className="header__search-mobile__icon">
+            <span onClick={() => handleShowSearchMobile()}  className="header__search-mobile__icon">
               <i className="bx bx-x"></i>
             </span>
           </div>

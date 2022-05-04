@@ -13,7 +13,7 @@ const Form = (props) => {
 const FormGroup = (props) => {
   return (
     <>
-      <div className={`form-group ${props.textError ? 'error' : null}`}>
+      <div className={`form-group ${props.textError ? 'error' : ''}`}>
         <label className="form-group__label" htmlFor={props.id}>{props.label}</label>
         <input
           className="form-group__input"

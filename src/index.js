@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import App from './App';
 import './assets/boxicons/css/boxicons.min.css'
-
+import { store } from './redux/store'
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
+    <React.StrictMode>
     <App />
-  </React.StrictMode>,
+  </React.StrictMode>
+  </Provider>,
   document.getElementById('root')
 );
 

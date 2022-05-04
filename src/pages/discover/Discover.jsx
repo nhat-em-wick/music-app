@@ -1,75 +1,74 @@
-import React, {memo} from "react";
+import React, { memo, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import HeroSlider from "../../components/hero-slider/HeroSlider";
-import Section, {SectionTitle} from "../../components/section/Section";
+import Section, { SectionTitle } from "../../components/section/Section";
 import Song from "../../components/song/Song";
-import Card from "../../components/card/Card";
+import CardAlbum from "../../components/card-album/CardAlbum";
+import { useSelector, useDispatch } from "react-redux";
 
+import { songsTest, albumTest } from "../../constant";
+import {
+  list,
+  currentSong,
+  index,
+  repeat,
+  random,
+  listPlayed,
+  clearListPlayed,
+} from "../../redux/music/musicSlice";
 
 import "./discover.scss";
 
 const Discover = (props) => {
+  const [topSongs, setTopSongs] = useState([]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setTopSongs(songsTest);
+  }, []);
 
   return (
     <>
-      <HeroSlider/>
+      <HeroSlider />
       <Section>
-        <SectionTitle title="có thể bạn muốn nghe"/>
+        <SectionTitle title="có thể bạn muốn nghe" />
         <div className="grid">
           <div className="row">
-            <div className="col l-2-4">
-              <Card/>
-            </div>
-            <div className="col l-2-4">
-              <Card/>
-            </div>
-            <div className="col l-2-4">
-              <Card/>
-            </div>
-            <div className="col l-2-4">
-              <Card/>
-            </div>
-            <div className="col l-2-4">
-              <Card/>
-            </div>
+            {albumTest.map((item, index) => (
+              <div key={index} className="col l-2-4">
+                <CardAlbum album={item} />
+              </div>
+            ))}
           </div>
         </div>
       </Section>
       <Section>
-        <SectionTitle title="nổi bật trong tuần"/>
+        <SectionTitle title="nổi bật trong tuần" />
         <div className="grid">
           <div className="row">
-            <div className="col l-2-4">
-              <Card/>
-            </div>
-            <div className="col l-2-4">
-              <Card/>
-            </div>
-            <div className="col l-2-4">
-              <Card/>
-            </div>
-            <div className="col l-2-4">
-              <Card/>
-            </div>
-            <div className="col l-2-4">
-              <Card/>
-            </div>
+            {albumTest.map((item, index) => (
+              <div key={index} className="col l-2-4">
+                <CardAlbum album={item} indexAlbum={index} />
+              </div>
+            ))}
           </div>
         </div>
       </Section>
       <Section>
-        <SectionTitle title="Top bài hát nghe nhiều"/>
-        {
-          Array(6).fill(0).map((item, index) => (
-            <Song key={index}/>
-          ))
-        }
+        <SectionTitle title="Top bài hát nghe nhiều" />
+        {topSongs.map((item, index) => (
+          <Song
+            key={item.id}
+            song={item}
+            indexSong={index}
+            songs={topSongs ? topSongs : []}
+          />
+        ))}
       </Section>
     </>
   );
 };
-
-
 
 Discover.propTypes = {};
 
