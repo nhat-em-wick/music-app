@@ -23,7 +23,7 @@ function Song ({song, indexSong, songs}) {
 
   return (
     <>
-      <div className={`song ${currentSong?.id === song.id ? 'active' : ''}`}>
+      <div onDoubleClick={() => handlePlaySong(indexSong)} className={`song ${currentSong?.id === song.id ? 'active' : ''}`}>
         <div className="song__left">
           <div  className="song__thumb">
             <div className="song__thumb__overlay"></div>

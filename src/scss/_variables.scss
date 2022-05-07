@@ -19,17 +19,19 @@ $themes: (
     text-color-light: #939597,
     bg-input: #202326,
     primary-color: #eb530f,
-    border-color: rgba(#000, .1)
+    border-color: rgba(#000, .3),
+    bg-hover: rgba(#000, .1),
   ),
   "dark-theme": (
     bg-body: #161618,
     bg-container: #1F2125,
     title-color: #fff,
     text-color: rgba(#fff, .9),
-    text-color-light: rgba(#fff, .8),
+    text-color-light: rgba(#fff, .7),
     bg-input: #202326,
     primary-color: #eb530f,
-    border-color: rgba(#fff, .1)
+    border-color: rgba(#fff, .3),
+    bg-hover: rgba(#fff, .1),
   )
 );
 

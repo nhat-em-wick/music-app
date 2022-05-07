@@ -140,7 +140,7 @@ export const albumTest = [
   },
   {
     id: 2,
-    name: 'Những bài hát hay nhất của Mr.Siro',
+    name: 'Khóc cùng em',
     songs: [
       {
         id: 0,
@@ -187,7 +187,7 @@ export const albumTest = [
   },
   {
     id: 3,
-    name: 'Những bài hát hay nhất của Mr.Siro',
+    name: 'Em gái mưa',
     songs: [
       {
         id: 0,
@@ -281,7 +281,7 @@ export const albumTest = [
   },
   {
     id: 5,
-    name: 'Những bài hát hay nhất của Mr.Siro',
+    name: 'Piano version',
     songs: [
       {
         id: 0,

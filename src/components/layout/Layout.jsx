@@ -83,7 +83,7 @@ const Layout = (props) => {
     } else {
       audioRef.current.pause();
     }
-  }, [currentIndex, isPlaying]);
+  }, [currentIndex, isPlaying, songs]);
 
   useEffect(() => {
     if (isRandom) {
