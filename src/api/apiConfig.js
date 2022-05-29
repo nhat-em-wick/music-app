@@ -1,5 +1,5 @@
 const apiConfig = {
-  baseUrl : "http://localhost:3001/api/v1/",
+  baseUrl : process.env.REACT_APP_BASE_URL,
 }
 
 
