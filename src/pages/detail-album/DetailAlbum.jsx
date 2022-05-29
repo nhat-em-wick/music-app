@@ -50,7 +50,6 @@ const DetailAlbum = (props) => {
     const fetchDetailAlbum = async () => {
       try {
         const response1 = await zingApi.getDetailPlaylist({ id: albumId });
-        console.log(response1)
         const response2 = await zingApi.getSectionBottom({ id: albumId })
         setPlaylist([...response1.data.song.items]);
         setDetailAlbum(response1.data);
