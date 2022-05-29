@@ -1,0 +1,178 @@
+@use '../../scss/' as *;
+
+.search-wrapper {
+  width: 400px;
+  height: 100%;
+  position: relative;
+  margin: auto;
+  @include tablet {
+    width: 300px;
+  }
+  @include mobile {
+    display: none;
+  }
+  
+  &.show-mobile {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: getVariable(bg-container);
+    height: getVariable(header-height);
+    box-shadow: 0 1px 3px rgba($color: #000000, $alpha: .1);
+    display: block;
+    input {
+      &:focus {
+        outline: none;
+        border: none;
+      }
+    }
+    
+  }
+  input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    color: getVariable(text-color);
+    background-color: getVariable(bg-body);
+    padding: getVariable(mb-1) getVariable(mb-2);
+    padding-right: 4rem;
+    border-radius: 25px;
+    @include mobile {
+      background-color: getVariable(bg-container);
+      padding: 0 getVariable(mb-2);
+      padding-right: 5rem;
+    }
+    &:focus {
+      outline: 1px solid getVariable(primary-color);
+    }
+  }
+  .search-action {
+    position: absolute;
+    top: 55%;
+    right: getVariable(mb-2);
+    transform: translateY(-50%);
+    display: flex;
+    gap: getVariable(mb-1);
+    @include mobile {
+      display: none;
+    }
+    &__icon {
+      font-size: getVariable(icon-font-size);
+      cursor: pointer;
+      &.action--search:hover {
+        color: getVariable(primary-color);
+      }
+    }
+    &-mobile {
+      position: absolute;
+      top: 53%;
+      right: getVariable(mb-2);
+      transform: translateY(-50%);
+      display: flex;
+      gap: getVariable(mb-3);
+      visibility: hidden;
+      @include mobile {
+        visibility: visible;
+      }
+      .search-action__text {
+        
+      }
+    }
+  }
+}
+
+.search-result-wrapper {
+  padding: getVariable(mb-2) getVariable(mb-1);
+  padding-right: 0;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: getVariable(mb-5);
+  max-height: 400px;
+  background-color: getVariable(bg-container);
+  box-shadow: 0 0px 6px rgba($color: #000000, $alpha: 0.2);
+  border-radius: 10px;
+  visibility: hidden;
+  overflow: hidden;
+  
+  @include mobile {
+    top: getVariable(header-height);
+    border-radius: unset;
+  }
+   &.active {
+     visibility: visible;
+   }
+   
+
+   .search-result__title {
+     padding: 0 getVariable(mb-2);
+     word-wrap: break-word;
+     font-weight: 500;
+     margin-bottom: getVariable(mb-1);
+   }
+   .search-result__nothing {
+    padding: 0 getVariable(mb-2);
+    word-wrap: break-word;
+   }
+  .search-result__list-songs {
+    min-height: 0;
+    max-height: 300px;
+    overflow-y: scroll;
+    &:hover {
+      overflow-y: scroll;
+     }
+  
+     &::-webkit-scrollbar {
+       width: getVariable(mb-1);
+     }
+     &::-webkit-scrollbar-track {
+       background-color: getVariable(bg-container);
+       margin-block: getVariable(mb-1);
+       margin-right: 2rem;
+     }
+     &::-webkit-scrollbar-thumb {
+       border-radius: 100vw;
+       background-color: getVariable(bg-hover);
+     }
+     &::-webkit-scrollbar-thumb:hover {
+      background-color: getVariable(border-color);
+    }
+  }
+  .search-result__link-song {
+    display: flex;
+    align-items: center;
+    gap: getVariable(mb-1);
+  }
+  .search-result__item-song {
+    padding: getVariable(mb-1) getVariable(mb-2);
+    border-radius: 5px;
+    &:hover {
+      background-color: getVariable(bg-hover);
+    }
+    &__thumb {
+      overflow: hidden;
+      border-radius: 5px;
+      width: 45px;
+      height: 45px;
+    }
+    &__name {
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+    &__singer {
+      font-size: getVariable(smaller-font-size);
+      color: getVariable(text-color-light);
+    }
+  }
+}
+
+.search__icon-mobile--toggle {
+  font-size: getVariable(icon-font-size);
+  @include centerFlex;
+  display: none;
+
+  @include mobile {
+    display: flex;
+  }
+}

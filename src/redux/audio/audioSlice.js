@@ -4,7 +4,9 @@ const initialState = {
   isPlay: false,
   currentTime: 0,
   duration: 0,
-  isMute: false
+  isMute: false,
+  stream: null,
+  currentVolume: 100,
 }
 
 export const audioSlice = createSlice({
@@ -23,9 +25,15 @@ export const audioSlice = createSlice({
     mute: (state, action) => {
       state.isMute = action.payload
     },
+    stream: (state, action) => {
+      state.stream = action.payload
+    },
+    updateVolume: (state, action) => {
+      state.currentVolume = action.payload
+    }
   }
 })
 
-export const {playing, updateCurrentTime, updateDuration, mute} = audioSlice.actions
+export const {playing, updateCurrentTime, updateDuration, mute, stream, updateVolume} = audioSlice.actions
 
 export default audioSlice.reducer

@@ -1,0 +1,39 @@
+@use '../../scss/' as *;
+
+.pagination{  
+  margin-top: getVariable(mb-2);
+  &.disable {
+    display: none;
+  }
+  &__btn {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    border-radius: 20px;
+    border: 1px solid getVariable(primary-color);
+    padding: .25rem getVariable(mb-2);
+    margin: 0 auto;
+    cursor: pointer;
+    font-size: getVariable(small-font-size);
+    transition: .3s;
+    &:hover {
+      background-color: getVariable(primary-color);
+      color: #fff;
+    }
+  }
+  &__icon {
+    @include centerFlex();
+    transform: scale(0);
+    transition: .3s;
+    width: 0;
+    opacity: 0;
+    visibility: hidden;
+    &.active {
+      margin-right: 0.25rem;
+      transform: scale(1);
+      width: 1rem;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}

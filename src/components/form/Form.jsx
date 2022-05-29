@@ -20,12 +20,12 @@ const FormGroup = (props) => {
           type={props.type}
           name={props.name}
           id={props.id}
-          placeholder=' '
+          value={props.value}
+          onChange={props.onChange}
         />
         {
           props.textError ? <span className="form-group__error">{props.textError}</span> : null
         }
-        
       </div>
     </>
   );

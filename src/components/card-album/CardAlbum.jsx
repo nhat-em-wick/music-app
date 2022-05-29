@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-
+import LoadingSkeleton from "../loading-skeleton/LoadingSkeleton";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   playing,
@@ -19,66 +20,41 @@ import {
   albumPlay,
 } from "../../redux/music/musicSlice";
 
+import zingApi from "../../api/zingApi";
+
 import "./card-album.scss";
 
-const singers = [
-  {
-    id: 1,
-    name: "chi dan",
-  },
-  {
-    id: 2,
-    name: "son tung mtp",
-  },
-  {
-    id: 3,
-    name: "trinh thang binh",
-  },
-  {
-    id: 4,
-    name: "cuong toi",
-  },
-];
 
-const CardAlbum = ({ album, indexAlbum }) => {
+const CardAlbum = ({ album }) => {
   const dispatch = useDispatch();
-  // const [playAlbum, setPlayAlbum] = useState(false)
-
-  const songs = album.songs;
-  const isPlay = useSelector((state) => state.audio.isPlay);
+  const navigate = useNavigate()
+  const isPlaying = useSelector((state) => state.audio.isPlay);
   const currentAlbum = useSelector((state) => state.music.currentAlbum);
-  const music = useSelector((state) => state.music);
-  // console.log(music)
+  
   const handlePlayAlbum = (idAlbum) => {
-    dispatch(list(songs));
     dispatch(albumPlay(idAlbum));
     dispatch(playing(true));
-    // setPlayAlbum(true)
   };
   const handleEndedAlbum = () => {
-    dispatch(albumPlay(null));
     dispatch(playing(false));
-    // setPlayAlbum(false)
   };
 
+
   return (
-    <div className="card">
+    <div onClick={() => navigate(`/album/${album.encodeId}`)} className="card">
       <div
-        className={`card__thumb ${currentAlbum === album.id ? "active" : ""}`}
+        className={`card__thumb ${currentAlbum === album.encodeId && isPlaying ? 'active' : ''}`}
       >
         <div
           className="card__img"
           style={{
-            background: `url(${album.thumb}) center right / cover no-repeat`,
+            background: `url(${album.thumbnailM}) center right / cover no-repeat`,
           }}
         ></div>
         <div className="card__overlay"></div>
         <div className="card__action">
-          <span className="card__action-icon icon--heart">
-            <i className="bx bx-heart"></i>
-          </span>
           <div className="card__action-icon icon--play">
-            {currentAlbum === album.id && isPlay ? (
+            { isPlaying && currentAlbum === album.encodeId ?  (
               <div
                 onClick={() => handleEndedAlbum()}
                 className="card__wave-animate"
@@ -90,35 +66,51 @@ const CardAlbum = ({ album, indexAlbum }) => {
                 </div>
               </div>
             ) : (
-              <div onClick={() => handlePlayAlbum(album.id)} className="card__action--play">
+              <div
+                onClick={() => handlePlayAlbum(album.encodeId)}
+                className="card__action--play"
+              >
                 <i className="bx bx-play"></i>
               </div>
             )}
           </div>
-          <span className="card__action-icon icon--dot">
-            <i className="bx bx-dots-horizontal-rounded"></i>
-          </span>
         </div>
       </div>
 
       <div className="card__information">
-        <div className="card__name">{album.name}</div>
+        <div className="card__name">{album.title}</div>
         <ul className="card__singers">
-          {singers.map((item, index) => (
-            <>
-              <li key={index} className="card__singer__item">
+          {album?.artists?.map((item, index) => (
+            <React.Fragment key={index}>
+              <li className="card__singer__item">
                 <a href="#" className="card__singer__link">
                   {item.name}
                 </a>
               </li>
-              {index >= 0 && index !== singers.length - 1 && ", "}
-            </>
+              {index >= 0 && index !== album?.artists?.length - 1 && ", "}
+            </React.Fragment>
           ))}
         </ul>
       </div>
     </div>
   );
 };
+
+const Loading = () => {
+  return (
+    <div className="card">
+      <div className={`card__thumb`}>
+        <LoadingSkeleton style={{ "paddingTop" : "100%"}} />
+      </div>
+      <div className="card__information">
+        <LoadingSkeleton style={{ "height": '20px', "marginBottom": '10px' }} />
+        <LoadingSkeleton style={{ "height": '14px'}} />
+      </div>
+    </div>
+  );
+};
+
+CardAlbum.Loading = Loading
 
 CardAlbum.propTypes = {
   album: PropTypes.object,

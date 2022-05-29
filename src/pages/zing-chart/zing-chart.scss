@@ -1,0 +1,41 @@
+@use '../../scss/' as *;
+
+.zing-chart {
+  &__title {
+    font-size: 2rem;
+  }
+  &__chart {
+    height: 300px;
+  }
+  &__songs {
+
+    &__item {
+      display: flex;
+      align-items: center;
+    }
+    &__item:nth-child(1) {
+      .zing-chart__songs__number {
+        color: #4A90E2;
+      }
+    }
+    &__item:nth-child(2) {
+      .zing-chart__songs__number {
+        color: #E35050;
+      }
+    }
+    &__item:nth-child(3) {
+      .zing-chart__songs__number {
+        color: #57BD9C;
+      }
+    }
+    &__number {
+      font-size: 2rem;
+      flex-basis: 5%;
+      text-align: center;
+      margin-right: getVariable(mb-2);
+    }
+    &__info {
+      flex: 1;
+    }
+  }
+}

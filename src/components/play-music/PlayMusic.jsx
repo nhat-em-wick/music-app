@@ -1,35 +1,39 @@
-import React, { useEffect, useRef, useState,useMemo, memo, useCallback } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+  memo,
+  useCallback,
+} from "react";
 import PropTypes from "prop-types";
-import anime from 'animejs/lib/anime.es.js';
-
-
+import zingApi from "../../api/zingApi";
 import "./play-music.scss";
 
 import { useDispatch, useSelector } from "react-redux";
-import { mute } from "../../redux/audio/audioSlice";
+import {
+  list,
+  currentSong,
+  index,
+  repeat,
+  random,
+  listPlayed,
+  clearListPlayed,
+  albumPlay,
+  clearList
+} from "../../redux/music/musicSlice";
+import {
+  playing,
+  updateCurrentTime,
+  updateDuration,
+  mute,
+  stream,
+  updateVolume
+} from "../../redux/audio/audioSlice";
+import formatTime from "../../utils/formatTime";
 
-
-const PlayMusic = ({
-  songs,
-  audioRef,
-  currentIndex,
-  currentTime,
-  duration,
-  favorite,
-  isRandom,
-  isRepeat,
-  onRepeat,
-  onRandom,
-  updateCurrentTimeMouseTouch,
-  onFavorite,
-  onPrevSong,
-  onNextSong,
-  isPlaying,
-  onPlay,
-  onMute,
-  onRangeUpdate
-}) => {
-  const cdAnimate = useRef(null)
+const PlayMusic = ({}) => {
+  const cdAnimate = useRef(null);
   const cdThumbRef = useRef(null);
   const isDragSongRef = useRef(false);
   const isDragVolumeRef = useRef(false);
@@ -39,32 +43,180 @@ const PlayMusic = ({
   const progressVolumeRef = useRef(null);
   const currentVolumeRef = useRef(null);
   const currentCircleVolumeRef = useRef(null);
+  const audioRef = useRef(null);
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
+  const [favorite, setFavorite] = useState(false);
 
-  const isMute = useSelector(state => state.audio.isMute)
-  
   const [openMusicPlayMB, setOpenMusicPlayMB] = useState(false);
 
-  useEffect(() => {
-    if(isPlaying) {
-      cdThumbRef.current.classList.add('playing')
-    }else {cdThumbRef.current.classList.remove('playing')}
-    
-  }, [isPlaying])
+  const currentIndex = useSelector((state) => state.music.currentIndexSong);
+  const currentAlbum = useSelector((state) => state.music.currentAlbum);
+  const currentSongPlaying = useSelector((state) => state.music.currentSong);
+  const songs = useSelector((state) => state.music.list);
+  const isPlaying = useSelector((state) => state.audio.isPlay);
+  const currentTime = useSelector((state) => state.audio.currentTime);
+
+  const duration = useSelector((state) => state.audio.duration);
+  const isMute = useSelector((state) => state.audio.isMute);
+  const isRepeat = useSelector((state) => state.music.isRepeat);
+  const isRandom = useSelector((state) => state.music.isRandom);
+  const songsPlayed = useSelector((state) => state.music.songsPlayed);
+  const sourceAudio = useSelector((state) => state.audio.stream);
+  const currentVolume = useSelector((state) => state.audio.currentVolume);
+
+  // call api
+
+  const handlePlay = () => {
+    dispatch(playing(!isPlaying));
+  };
+
+  const handleRandom = () => {
+    dispatch(random(!isRandom));
+  };
+
+  const handleRepeat = () => {
+    dispatch(repeat(!isRepeat));
+  };
+
+  const handleFavorite = () => {
+    setFavorite(!favorite);
+  };
+
+  const updateCurrentTimeMouseTouch = (value) => {
+    dispatch(updateCurrentTime(value));
+  };
+
+  const handleRangeUpdate = (currentTimeRef, currentCircle) => {
+    const seconds = currentTime;
+    const percent = (seconds / duration) * 100;
+    currentTimeRef.current.style.width = percent + "%";
+    currentCircle.current.style.left = `calc(${percent + "%"} - 5px)`;
+  };
 
   useEffect(() => {
-    currentVolumeRef.current.style.width = audioRef.current.volume * 100 + "%";
+    if (isPlaying) {
+      audioRef.current.play();
+      dispatch(currentSong(songs[currentIndex]));
+    } else {
+      audioRef.current.pause();
+    }
+  }, [currentIndex, isPlaying]);
+
+ 
+
+  useEffect(() => {
+    const fetchSongStream = async () => {
+      try {
+        const id = {
+          id: songs[currentIndex]?.encodeId,
+        };
+        const response = await zingApi.getSongStream(id);
+        dispatch(stream(response.data[128]));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (songs.length > 0) {
+      fetchSongStream();
+    }
+  }, [currentIndex, songs]);
+
+  useEffect(() => {
+    if (isRandom) {
+      dispatch(listPlayed(currentIndex));
+    } else {
+      dispatch(clearListPlayed());
+    }
+  }, [currentIndex, isRandom]);
+
+  const checkRandomNextSong = () => {
+    if (songsPlayed.length >= songs.length) {
+      dispatch(clearListPlayed());
+    } else {
+      handleRandomSongs();
+    }
+  };
+
+  // change song
+  const nextSong = () => {
+    if (isRandom) {
+      checkRandomNextSong();
+    } else {
+      dispatch(index(currentIndex + 1 >= songs.length ? 0 : currentIndex + 1));
+    }
+    dispatch(playing(true));
+  };
+
+  const prevSong = () => {
+    if (isRandom) {
+      checkRandomNextSong();
+    } else {
+      dispatch(
+        index(currentIndex - 1 < 0 ? songs.length - 1 : currentIndex - 1)
+      );
+    }
+    dispatch(playing(true));
+  };
+
+  const handleRandomSongs = () => {
+    let newIndex;
+    do {
+      newIndex = Math.floor(Math.random() * songs.length);
+    } while (newIndex === currentIndex || songsPlayed.includes(newIndex));
+    dispatch(index(newIndex));
+  };
+
+  // event audio
+  const handleLoadMetadata = () => {
+    const seconds = Math.floor(audioRef.current.duration);
+    dispatch(updateDuration(seconds));
+  };
+
+  const handleOnTimeAudio = () => {
+    const seconds = Math.floor(audioRef.current.currentTime);
+    dispatch(updateCurrentTime(seconds));
+  };
+
+  const handleEnded = () => {
+    if (isRepeat) {
+      audioRef.current.play();
+    } else if (isRandom && songsPlayed.length === songs.length) {
+      dispatch(playing(false));
+    } else if (!isRandom && currentIndex === songs.length - 1) {
+      dispatch(playing(false));
+    } else {
+      nextSong();
+    }
+  };
+
+  const handleMute = () => {
+    audioRef.current.muted = !isMute;
+    dispatch(mute(!isMute));
+  };
+
+  // ======================================================================== //
+
+  useEffect(() => {
+    if (isPlaying) {
+      cdThumbRef.current.classList.add("playing");
+    } else {
+      cdThumbRef.current.classList.remove("playing");
+    }
+  }, [isPlaying]);
+
+  useEffect(() => {
+    currentVolumeRef.current.style.width = audioRef.current.volume * currentVolume + "%";
     currentCircleVolumeRef.current.style.left = `calc(${
-      audioRef.current.volume * 100 + "%"
+      audioRef.current.volume * currentVolume + "%"
     } - 5px)`;
+    audioRef.current.volume = currentVolume/100
   }, []);
 
   useEffect(() => {
-    onRangeUpdate(currentTimeSongRef, currentCircleSongRef)
-  }, [currentTime])
+    handleRangeUpdate(currentTimeSongRef, currentCircleSongRef);
+  }, [currentTime]);
 
-  
   const handleChangeProgress = (
     event,
     progressBarRef,
@@ -77,17 +229,17 @@ const PlayMusic = ({
     const width = progressBarRef.current.getBoundingClientRect().width;
     const min = left;
     const max = progressBarRef.current.getBoundingClientRect().width + left;
-    let percent
+    let percent;
     if (isDrag && clientX >= min && clientX <= max) {
       percent = (clientX - left) / width;
-    }else if(isDrag && clientX < min ) {
-      percent = 0
-    }else if(isDrag && clientX > max ) {
-      percent = 0.999999
+    } else if (isDrag && clientX < min) {
+      percent = 0;
+    } else if (isDrag && clientX > max) {
+      percent = 0.999999;
     }
     rangeRef.current.style.width = percent * 100 + "%";
     dotRef.current.style.left = `calc(${percent * 100 + "%"} - 5px)`;
-    return percent
+    return percent;
   };
 
   const handleMouseDownSong = (e) => {
@@ -113,6 +265,7 @@ const PlayMusic = ({
       isDragVolumeRef.current
     );
     audioRef.current.volume = percent;
+    dispatch(updateVolume(percent * 100));
   };
 
   const handleMouseUp = (e) => {
@@ -140,14 +293,20 @@ const PlayMusic = ({
         currentCircleVolumeRef,
         isDragVolumeRef.current
       );
-      if(percent <= 0) {
-        dispatch(mute(true))
-      }else {
-        dispatch(mute(false))
+      if (percent <= 0) {
+        dispatch(mute(true));
+      } else {
+        dispatch(mute(false));
       }
       audioRef.current.volume = percent;
     }
   };
+
+  const handleClearPlaylist = () => {
+    dispatch(clearList());
+    dispatch(playing(false));
+    dispatch(stream(null));
+  }
 
   useEffect(() => {
     window.addEventListener("mousemove", (e) => handleMouseMove(e));
@@ -160,17 +319,28 @@ const PlayMusic = ({
     return () => window.removeEventListener("mouseup", (e) => handleMouseUp(e));
   }, []);
 
+  useEffect(() => {
+    const handle = () => {
+     dispatch(playing(false));
+    }
+    window.addEventListener("beforeunload", handle);
+    return () => window.removeEventListener("beforeunload", handle);
+  }, [])
 
   return (
     <>
-      <div className={`play-music ${songs.length > 0 ? 'active' :''}`}>
+      <audio
+        ref={audioRef}
+        src={sourceAudio}
+        onEnded={() => handleEnded()}
+        onLoadedMetadata={() => handleLoadMetadata()}
+        onTimeUpdate={() => handleOnTimeAudio()}
+        autoPlay={isPlaying}
+      ></audio>
+      <div className={`play-music ${songs.length > 0 ? "active" : ""}`}>
         <div className="play-music__left">
           <div className="play-music__thumb">
-            <img
-              ref={cdThumbRef}
-              src={songs[currentIndex]?.thumb}
-              alt=""
-            />
+            <img ref={cdThumbRef} src={songs[currentIndex]?.thumbnail} alt="" />
             <div className="play-music__wave">
               <span className="wave"></span>
               <span className="wave"></span>
@@ -181,17 +351,17 @@ const PlayMusic = ({
           </div>
           <div className="play-music__information">
             <h3 className="play-music__name-song">
-              {songs[currentIndex]?.name}
+              {songs[currentIndex]?.title}
             </h3>
             <span className="play-music__singer">
-              {songs[currentIndex]?.singer}
+              {songs[currentIndex]?.artistsNames}
             </span>
           </div>
         </div>
         <div className="play-music__center">
           <div className="play-music__control">
             <div
-              onClick={() => onRandom()}
+              onClick={() => handleRandom()}
               className={`play-music__icon icon--random ${
                 isRandom ? "active" : ""
               }`}
@@ -200,13 +370,13 @@ const PlayMusic = ({
               <span className="tooltip-text">Phát ngẫu nhiên</span>
             </div>
             <div
-              onClick={() => onPrevSong()}
+              onClick={() => prevSong()}
               className="play-music__icon icon--previous"
             >
               <i className="bx bx-skip-previous"></i>
             </div>
             <div
-              onClick={() => onPlay()}
+              onClick={() => handlePlay()}
               className="play-music__icon icon--play"
             >
               {isPlaying ? (
@@ -216,13 +386,13 @@ const PlayMusic = ({
               )}
             </div>
             <div
-              onClick={() => onNextSong()}
+              onClick={() => nextSong()}
               className="play-music__icon icon--next"
             >
               <i className="bx bx-skip-next"></i>
             </div>
             <div
-              onClick={() => onRepeat()}
+              onClick={() => handleRepeat()}
               className={`play-music__icon icon--repeat ${
                 isRepeat ? "active" : ""
               }`}
@@ -233,7 +403,7 @@ const PlayMusic = ({
           </div>
           <div className="play-music__progress-bar-song">
             <span className="play-music__time time-start">
-              {currentTime}
+              {formatTime(currentTime)}
             </span>
             <div
               ref={progressSongRef}
@@ -250,36 +420,40 @@ const PlayMusic = ({
               ></div>
             </div>
             <span className="play-music__time time-duration">
-              {duration}
+              {formatTime(duration)}
             </span>
           </div>
         </div>
         <div className="play-music__right">
           <div className="play-music__action">
             <div
-              onClick={() => onFavorite()}
+              onClick={() => handleFavorite()}
               className={`play-music__icon icon--heart ${
                 favorite ? "active" : ""
               }`}
             >
               {favorite ? (
-                <i className="bx bxs-heart"></i>
-              ) : (
-                <i className="bx bx-heart"></i>
-              )}
+              <i className="bx bxs-heart"></i>
+            ) : (
+              <i className="bx bx-heart"></i>
+            )}
               <span className="tooltip-text">Yêu thích</span>
             </div>
             <div className="play-music__icon icon--download">
               <i className="bx bx-download"></i>
               <span className="tooltip-text">Tải xuống</span>
             </div>
+            <div onClick={handleClearPlaylist} className="play-music__icon icon--download">
+              <i className='bx bx-trash' ></i>
+              <span className="tooltip-text">Xóa danh sách phát</span>
+            </div>
           </div>
           <div className="play-music__progress-bar-volume">
             <div
-              onClick={() => onMute()}
+              onClick={() => handleMute()}
               className="play-music__icon icon--volume"
             >
-              { isMute ? (
+              {isMute ? (
                 <i className="bx bxs-volume-mute"></i>
               ) : (
                 <i className="bx bxs-volume-full"></i>
@@ -303,13 +477,13 @@ const PlayMusic = ({
         </div>
       </div>
       <PlayMusicMobile
-      songs={songs}
+        songs={songs}
         currentIndex={currentIndex}
         isPlaying={isPlaying}
-        onPlay={onPlay}
-        onNext={onNextSong}
+        onPlay={handlePlay}
+        onNext={nextSong}
         favorite={favorite}
-        onFavorite={onFavorite}
+        onFavorite={handleFavorite}
         openFullMB={() => setOpenMusicPlayMB(!openMusicPlayMB)}
         audioRef={audioRef}
       />
@@ -323,17 +497,19 @@ const PlayMusic = ({
         isRandom={isRandom}
         isRepeat={isRepeat}
         isPlaying={isPlaying}
-        onPlay={onPlay}
-        onRandom={() => onRandom()}
-        onRepeat={() => onRepeat()}
-        onPrevSong={onPrevSong}
-        onNextSong={onNextSong}
-        onFavorite={() => onFavorite()}
+        onPlay={handlePlay}
+        onRandom={handleRandom}
+        onRepeat={handleRepeat}
+        onPrevSong={prevSong}
+        onNextSong={nextSong}
+        onFavorite={handleFavorite}
         openMusicPlayMB={openMusicPlayMB}
         closeMusicPlayMB={() => setOpenMusicPlayMB(!openMusicPlayMB)}
-        updateCurrentTimeMouseTouch={(value) => updateCurrentTimeMouseTouch(value)}
+        updateCurrentTimeMouseTouch={(value) =>
+          updateCurrentTimeMouseTouch(value)
+        }
         onRangeUpdate={(currentTimeRef, currentCircleRef) =>
-          onRangeUpdate(currentTimeRef, currentCircleRef)
+          handleRangeUpdate(currentTimeRef, currentCircleRef)
         }
       />
     </>
@@ -351,33 +527,29 @@ const PlayMusicMobile = ({
   openFullMB,
   audioRef,
 }) => {
-  const cdThumbRef = useRef(null)
-
+  const cdThumbRef = useRef(null);
 
   useEffect(() => {
-    if(isPlaying) {
-      cdThumbRef.current.classList.add('playing')
-    }else {
-      cdThumbRef.current.classList.remove('playing')
+    if (isPlaying) {
+      cdThumbRef.current.classList.add("playing");
+    } else {
+      cdThumbRef.current.classList.remove("playing");
     }
-  }, [isPlaying])
+  }, [isPlaying]);
 
   return (
     <>
-      <div className="play-music-mobile">
+      <div className={`play-music-mobile ${songs.length > 0 ? "active" : ""}`}>
         <div onClick={() => openFullMB()} className="play-music-mobile__left">
           <div className="play-music-mobile__cd-thumb">
-            <img ref={cdThumbRef}
-              src={songs[currentIndex]?.thumb}
-              alt=""
-            />
+            <img ref={cdThumbRef} src={songs[currentIndex]?.thumbnail} alt="" />
           </div>
           <div className="play-music-mobile__text">
             <div className="play-music-mobile__name">
-              {songs[currentIndex]?.name}
+              {songs[currentIndex]?.title}
             </div>
             <div className="play-music-mobile__singer">
-              {songs[currentIndex]?.singer}
+              {songs[currentIndex]?.artistsNames}
             </div>
           </div>
         </div>
@@ -435,22 +607,21 @@ const PlayMusicMobileFull = ({
   onNextSong,
   isPlaying,
   onPlay,
-  onRangeUpdate
+  onRangeUpdate,
 }) => {
   const isDrag = useRef(false);
   const progressSongRef = useRef();
   const currentTimeRef = useRef();
   const dotCurrentTimeRef = useRef();
-  const cdThumbRef = useRef(null)
-
+  const cdThumbRef = useRef(null);
 
   useEffect(() => {
-    if(isPlaying) {
-      cdThumbRef.current.classList.add('playing')
-    }else {
-      cdThumbRef.current.classList.remove('playing')
+    if (isPlaying) {
+      cdThumbRef.current.classList.add("playing");
+    } else {
+      cdThumbRef.current.classList.remove("playing");
     }
-  }, [isPlaying])
+  }, [isPlaying]);
 
   const handleChangeProgressSongMB = (
     event,
@@ -510,17 +681,16 @@ const PlayMusicMobileFull = ({
       window.removeEventListener("touchend", (e) => handleTouchEnd(e));
   }, []);
 
-  
   useEffect(() => {
-    onRangeUpdate(currentTimeRef, dotCurrentTimeRef)
-  }, [currentTime])
+    onRangeUpdate(currentTimeRef, dotCurrentTimeRef);
+  }, [currentTime]);
 
   return (
     <>
       <div
         className={`play-music-mobile-full ${openMusicPlayMB ? "show" : ""}`}
         style={{
-          background: `url(${songs[currentIndex]?.thumb}) no-repeat center / cover`,
+          background: `url(${songs[currentIndex]?.thumbnail}) no-repeat center / cover`,
         }}
       >
         <div className="backdrop-filter"></div>
@@ -533,18 +703,19 @@ const PlayMusicMobileFull = ({
           </div>
           <div className="play-music-mobile-full__top__text">
             <div className="play-music-mobile-full__name">
-              {songs[currentIndex]?.name}
+              {songs[currentIndex]?.title}
             </div>
             <div className="play-music-mobile-full__singer">
-              {songs[currentIndex]?.singer}
+              {songs[currentIndex]?.artistsNames}
             </div>
           </div>
         </div>
         <div className="play-music-mobile-full__content">
           <div className="play-music-mobile-full__cd-thumb">
-            <img ref={cdThumbRef}
-              src={songs[currentIndex]?.thumb}
-              alt={songs[currentIndex]?.name}
+            <img
+              ref={cdThumbRef}
+              src={songs[currentIndex]?.thumbnail}
+              alt={songs[currentIndex]?.title}
             />
           </div>
           <div className="play-music-mobile-full__progress-bar">
@@ -631,4 +802,4 @@ const PlayMusicMobileFull = ({
 
 PlayMusic.propTypes = {};
 
-export default PlayMusic;
+export default memo(PlayMusic);

@@ -2,11 +2,11 @@
 
 .card {
   // position: relative;
-  
+  margin-bottom: getVariable(mb-2);
  
   &__img {
     padding-top: 100%;
-    transition: transform .3s ease;
+    transition: transform .5s ease;
   }
   &__information {
     margin-top: getVariable(mb-1);
@@ -46,6 +46,8 @@
   &__thumb {
     position: relative;
     overflow: hidden;
+    width: 100%;
+    height: 100%;
     border-radius: 10px;
   }
   &__thumb.active &__overlay {
@@ -64,7 +66,7 @@
     display: flex;
   }
   &__thumb:hover  &__img {
-    transform: scale(1.2);
+    transform: scale(1.1);
   }
   &__overlay {
     position: absolute;
@@ -91,21 +93,21 @@
         align-items: flex-end;
         gap: .25rem;
          & > .wave {
-        
-        width: 4px;
-        height: 20px;
-        background-color: #fff;
-        animation: waveSong .7s linear infinite;
-      }
-       &> .wave:nth-child(1) {
-        animation-delay: .2s;
-      }
-      &> .wave:nth-child(2) {
-        animation-delay: .3s;
-      }
-      &> .wave:nth-child(1) {
-        animation-delay: .2s;
-      }
+          width: 4px;
+          height: 20px;
+          background-color: #fff;
+          animation: wave .8s linear infinite;
+        }
+        & > .wave:nth-child(1) {
+          animation-delay: .2s;
+        }
+        & > .wave:nth-child(2) {
+          animation-delay: .3s;
+        }
+        & > .wave:nth-child(3) {
+          animation-delay: .2s;
+        }
+       
       }
 
      

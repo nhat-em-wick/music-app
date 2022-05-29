@@ -3,6 +3,7 @@
 .main {
   padding-top: calc(getVariable(header-height) + getVariable(mb-3));
   min-height: 100vh;
+  position: relative;
   &__sidebar, &__sidebar-mobile {
     padding-top: getVariable(header-height);
     width: 200px;

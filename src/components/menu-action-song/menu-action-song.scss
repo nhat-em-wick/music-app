@@ -1,0 +1,68 @@
+@use "../../scss/" as *;
+
+.menu-action-song {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  background-color: getVariable(bg-container);
+  box-shadow: 0 0px 6px rgba($color: #000000, $alpha: 0.2);
+  z-index: 1000;
+  width: 250px;
+  border-radius: 10px;
+  visibility: hidden;
+  overflow: hidden;
+  &.active {
+   visibility: visible;
+  }
+
+  &__header {
+    display: flex;
+    padding: getVariable(mb-2);
+    &__thumb {
+      width: 45px;
+      height: 45px;
+      overflow: hidden;
+      border-radius: 5px;
+      position: relative;
+      flex-shrink: 0;
+      &__img {
+        padding-top: 100%;
+      }
+    }
+    &__info {
+      margin-left: getVariable(mb-1);
+      flex: 1;
+    }
+    &__title {
+      font-size: getVariable(normal-font-size);
+      font-weight: 500;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      text-transform: capitalize;
+    }
+  }
+  &__list {
+    
+  }
+  &__item {
+    display: flex;
+    align-items: center;
+    padding: getVariable(mb-1) getVariable(mb-2);
+    gap: getVariable(mb-2);
+    cursor: pointer;
+    &:hover {
+      background-color: getVariable(bg-hover);
+    }
+  }
+  &__icon {
+    font-size: getVariable(icon-font-size);
+  }
+  &__text {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+}

@@ -6,7 +6,7 @@ const Footer = props => {
   return (
     <div className={`footer ${props.shrink ? 'shrink' : ''}`}>
       <div className="footer-text">
-        &copy; Copyright 2021
+        &copy; Copyright 2022, Music App
       </div>
     </div>
   )

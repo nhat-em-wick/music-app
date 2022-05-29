@@ -10,7 +10,8 @@
       padding-right: 0;
     }
     @include mobile {
-
+      flex-direction: column;
+      align-items: center;
     }
     &__cd {
       position: relative;
@@ -23,14 +24,16 @@
         height: 300px;
       }
       @include mobile {
-        display: none;
+        width: 250px;
+        height: 250px;
       }
+      
     }
 
    
     &__img {
       padding-top: 100%;
-      animation: spinner 10s linear infinite;
+      animation: spinner 15s linear infinite;
       -webkit-animation-play-state: paused;
       -ms-animation-play-state: paused;
       -o-animation-play-state: paused;
@@ -129,18 +132,36 @@
       flex-direction: column;
       align-items: center;
       gap: getVariable(mb-1);
+      @include maxWidthScreen(900px) {
+        flex: 1;
+      }
     }
     &__title {
       line-height: 2rem;
+      color: getVariable(title-color);
     }
-    &__update-time, &__singer {
+    &__update-time, &__artists {
       font-size: getVariable(small-font-size);
       color: getVariable(text-color-light);
       
     }
-    &__singer {
-      transition: color .3s ease;
-      width: max-content;
+    &__artists {
+      
+      width: 200px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      & > div {
+        display: inline-block;
+      }
+      &__item {
+        display: inline-block;
+        transition: color .3s ease;
+        &:hover {
+          color: getVariable(primary-color);
+        }
+      }
     }
     &__singer:hover {
       color: getVariable(primary-color);

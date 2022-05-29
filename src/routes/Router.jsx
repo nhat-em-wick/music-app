@@ -4,8 +4,8 @@ import { BrowserRouter ,Routes, Route, Navigate, useLocation } from 'react-route
 import Layout from '../components/layout/Layout'
 import Discover from '../pages/discover/Discover'
 import User from '../pages/user/User'
-import Popular from '../pages/popular/Popular'
-import Radio from '../pages/radio/Radio'
+import ZingChart from '../pages/zing-chart/ZingChart'
+import NewRelease from '../pages/new-release/NewRelease'
 import Playlists from '../pages/playlists/Playlists'
 import Favorite from '../pages/favorite/Favorite'
 import Stream from '../pages/stream/Stream'
@@ -13,6 +13,11 @@ import Login from '../pages/login/Login'
 import Register from '../pages/register/Register'
 import Albums from '../pages/albums/Albums'
 import DetailAlbum from '../pages/detail-album/DetailAlbum'
+import Search from '../pages/search/Search'
+import SearchAll from '../pages/search/SearchAll'
+import SearchSongs from '../pages/search/SearchSongs'
+import SearchAlbum from '../pages/search/SearchAlbum'
+import DetailSong from '../pages/detail-song/DetailSong'
 const Router = () => {
   return (
     <BrowserRouter>
@@ -21,13 +26,19 @@ const Router = () => {
         <Route path="/" element={<Layout/>} >
           <Route index element={<Discover/>}/>
           <Route  path='ca-nhan' element={<User/>}/> 
-          <Route path='pho-bien' element={<Popular/>}/> 
-          <Route path='radio' element={<Radio/>}/>
+          <Route path='zing-chart' element={<ZingChart/>}/> 
+          <Route path='moi-phat-hanh' element={<NewRelease/>}/>
           <Route path='truc-tiep' element={<Stream/>}/>
           <Route path='danh-sach-phat' element={<Playlists/>}/> 
           <Route path='yeu-thich' element={<Favorite/>}/> 
-          <Route path='albums' element={<Albums/>}></Route> 
-          <Route path='/albums/:albumId' element={<DetailAlbum/>}/> 
+          <Route path='album' element={<Albums/>}></Route> 
+          <Route path='/album/:albumId' element={<DetailAlbum/>}/> 
+          <Route path='/bai-hat/:songId' element={<DetailSong/>}/>
+          <Route path='tim-kiem' element={<Search/>}>
+            <Route path='tat-ca' element={<SearchAll/>}></Route>
+            <Route path='bai-hat' element={<SearchSongs/>}></Route>
+            <Route path='album' element={<SearchAlbum/>}></Route>
+          </Route> 
 
           <Route path='dang-nhap' element={<Login/>}/>
           <Route path='dang-ki' element={<Register/>}/>

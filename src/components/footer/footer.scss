@@ -2,14 +2,22 @@
 
 .footer {
   width: 100%;
-  height: 4rem;
+  height: 5.5rem;
   background-color: getVariable(bg-body);
+  //  background-color: red;
   padding: getVariable(mb-2) 10rem;
   transition: padding .3s ease;
+  @include centerFlex;
+  @include mobile {
+    padding: 0;
+  }
   
   &.shrink {
     padding-left: calc(getVariable(width-sidebar) + getVariable(mb-4));
     padding-right: getVariable(mb-4);
+    @include mobile {
+      padding: 0;
+    }
   }
   &-text {
     text-align: center;

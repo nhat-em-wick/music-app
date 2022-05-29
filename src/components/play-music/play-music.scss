@@ -117,7 +117,7 @@
         @include centerAbs();
       }
       &:hover {
-        background-color: getVariable(border-color);
+        background-color: getVariable(bg-hover);
       }
       &:hover .tooltip-text {
         opacity: 1;
@@ -161,7 +161,7 @@
   &__range {
     position: relative;
     height: 4px;
-    background-color: getVariable(border-color);
+    background-color: getVariable(bg-hover);
     border-radius: 10px;
     margin: 0 getVariable(mb-2);
     cursor: pointer;
@@ -209,7 +209,7 @@
     background-color: getVariable(primary-color);
     top: -4px;
     left: calc(0% - 5px);
-    border: 1px solid getVariable(border-color);
+    border: 1px solid getVariable(bg-hover);
     display: none;
   }
   &__range.range__song:hover .dot__song,
@@ -249,7 +249,9 @@
   display: none;
 
   @include mobile {
-    display: flex;
+    &.active {
+      display: flex;
+    }
   }
 
   &__left {
@@ -286,6 +288,7 @@
   }
   &__name {
     font-size: getVariable(small-font-size);
+    font-weight: 500;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;

@@ -1,0 +1,41 @@
+@use '../../scss' as *;
+
+.skeleton {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  
+ &::before {
+  background-color: getVariable(bg-hover);
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 100%;
+  top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+ }
+ &::after {
+   background-image: linear-gradient(to right, transparent, getVariable(bg-container) 50%, transparent);
+   position: absolute;
+   content: '';
+   width: 40%;
+   height: 100%;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   animation: skeleton-animation 2s linear infinite alternate;
+   
+ }
+}
+
+@keyframes skeleton-animation {
+  from {
+    left: 0%;
+  }
+  to {
+    left: 100%;
+  }
+}

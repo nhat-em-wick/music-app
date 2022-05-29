@@ -11,7 +11,7 @@ $colors: (
 );
 
 $themes: (
-  "light-theme": (
+  "light": (
     bg-body: #f7f8f9,
     bg-container: #fff,
     title-color: #212529,
@@ -20,14 +20,14 @@ $themes: (
     bg-input: #202326,
     primary-color: #eb530f,
     border-color: rgba(#000, .3),
-    bg-hover: rgba(#000, .1),
+    bg-hover: rgba(#000, .05),
   ),
-  "dark-theme": (
+  "dark": (
     bg-body: #161618,
     bg-container: #1F2125,
-    title-color: #fff,
-    text-color: rgba(#fff, .9),
-    text-color-light: rgba(#fff, .7),
+    title-color: rgba(#fff, .96),
+    text-color: rgba(#fff, .75),
+    text-color-light: rgba(#fff, .5),
     bg-input: #202326,
     primary-color: #eb530f,
     border-color: rgba(#fff, .3),
@@ -36,6 +36,7 @@ $themes: (
 );
 
 $font-sizes: (
+  lg-font-size: 1rem,
   normal-font-size: .938rem,
   small-font-size: .875rem,
   smaller-font-size: .813rem,

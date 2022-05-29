@@ -46,32 +46,43 @@
   }
 
   &__hamburger--toggle {
-    width: 1.875rem;
-    height: 3px;
-    background-color: getVariable(text-color-light);
-    position: relative;
-    border-radius: 10px;
+    width: 1.7rem;
+    height:  1.7rem;
+    @include centerFlex;
+
+
+    .line {
+      background-color: getVariable(text-color-light);
+      width: 100%;
+      height: 3px;
+      position: relative;
+      transition: all .5s ease;
+      border-radius: 10px;
+      &::before {
+        width: 100%;
+        height: 3px;
+        background-color: getVariable(text-color-light);
+        position: absolute;
+        content: '';
+        top: -6px;
+        left: 0;
+        border-radius: 10px;
+        transition: all .5s ease;
+      }
+      &::after {
+        width: 100%;
+        height: 3px;
+        background-color: getVariable(text-color-light);
+        position: absolute;
+        content: '';
+        top: 6px;
+        left: 0;
+        border-radius: 10px;
+        transition: all .5s ease;
+      }
+    }
   }
-  &__hamburger--toggle::before {
-    width: 1.875rem;
-    height: 3px;
-    background-color: getVariable(text-color-light);
-    position: absolute;
-    content: '';
-    top: -6px;
-    left: 0;
-    border-radius: 10px;
-  }
-  &__hamburger--toggle::after {
-    width: 1.875rem;
-    height: 3px;
-    background-color: getVariable(text-color-light);
-    position: absolute;
-    content: '';
-    top: 6px;
-    left: 0;
-    border-radius: 10px;
-  }
+  
   &__logo {
     display: flex;
     align-items: center;
@@ -82,9 +93,6 @@
     align-items: center;
     gap: .1rem;
     height: 25px;
-    &.active > .wave {
-      animation: wave .8s linear;
-    }
   }
   &__animate > .wave {
     width: 4px;
@@ -95,30 +103,24 @@
 
   &__animate .wave:nth-child(1) {
     height: 15%;
-    animation-delay: .3s;
   }
   &__animate .wave:nth-child(2) {
     height: 50%;
-    animation-delay: .4s;
   }
   &__animate .wave:nth-child(3) {
     height: 70%;
-    animation-delay: .5s;
   }
   &__animate .wave:nth-child(4) {
     animation-delay: .6s;
   }
   &__animate .wave:nth-child(5) {
     height: 50%;
-    animation-delay: .7s;
   }
   &__animate .wave:nth-child(6) {
     height: 80%;
-    animation-delay: .8s;
   }
   &__animate .wave:nth-child(7) {
     height: 30%;
-    animation-delay: .9s;
   }
   
   &__title {
@@ -128,9 +130,7 @@
   }
   &__search {
     position: relative;
-    @include mobile {
-      display: none;
-    }
+    
     &__icon {
       position: absolute;
       top: 60%;
@@ -138,34 +138,16 @@
       right: 15px;
       font-size: getVariable(icon-font-size);
     }
-  }
-  &__input {
-    width: 100%;
-    height: 100%;
-    border: none;
-    color: getVariable(text-color);
-    background-color: getVariable(bg-body);
-    padding: getVariable(mb-1) getVariable(mb-2);
-    padding-right: getVariable(mb-5);
-    border-radius: 25px;
-  }
-  &__input:focus {
-    outline: none;
-  }
-  &__input::placeholder {
-    font-family: 'Roboto', sans-serif;
-  }
-  // 
-  &__icon-search--toggle {
-    font-size: getVariable(icon-font-size);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    display: none;
-    @include mobile {
-      display: flex;
+    &__icon--clear {
+      position: absolute;
+      top: 60%;
+      transform: translateY(-50%);
+      right: 2.5rem;
+      font-size: getVariable(icon-font-size);
+      cursor: pointer;
     }
   }
+  
   &__icon-search-mobile {
     display: none;
     @include mobile {
@@ -179,15 +161,22 @@
     left: 0;
     background-color: getVariable(bg-container);
     height: getVariable(header-height);
-    padding: getVariable(mb-2);
+    box-shadow: 0 1px 3px rgba($color: #000000, $alpha: .1);
     display: none;
 
     &__icon {
       position: absolute;
+      top: 55%;
+      right: 4rem;
+      transform: translateY(-50%);
+      font-size: getVariable(icon-font-size);
+      cursor: pointer;
+    }
+    &__text {
+      position: absolute;
       top: 50%;
       right: getVariable(mb-2);
       transform: translateY(-50%);
-      font-size: getVariable(icon-font-size);
     }
   }
   &__search-mobile.active {
@@ -195,9 +184,14 @@
   }
  &__search-mobile__input {
     width: 100%;
+    height: 100%;
     border: none;
-    padding: getVariable(mb-1) getVariable(mb-2);
-    padding-right: getVariable(mb-5);
+    padding: getVariable(mb-2);
+    padding-left: getVariable(mb-5);
+    padding-right: 6rem;
+    
+    background-color: getVariable(bg-container);
+    color: getVariable(text-color);
   }
   &__search-mobile__input:focus {
     outline: none;

@@ -1,17 +1,16 @@
 import React, { useRef } from "react";
 import PropTypes from "prop-types";
-
+import LoadingSkeleton from "../loading-skeleton/LoadingSkeleton";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore,{ Navigation, Pagination, Autoplay } from "swiper";
+import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 
-import './hero-slider.scss'
-SwiperCore.use([Navigation])
-const HeroSlider = (props) => {
-
-  const nextSlideRef = useRef(null)
-  const prevSlideRef = useRef(null)
+import "./hero-slider.scss";
+SwiperCore.use([Navigation]);
+const HeroSlider = ({ banner }) => {
+  const nextSlideRef = useRef(null);
+  const prevSlideRef = useRef(null);
 
   return (
     <>
@@ -36,49 +35,40 @@ const HeroSlider = (props) => {
         breakpoints={{
           200: {
             slidesPerView: 1,
-            spaceBetweenSlides: 30
+            spaceBetweenSlides: 30,
           },
-        // when window width is <= 999px
+          // when window width is <= 999px
           600: {
             slidesPerView: 2,
-            spaceBetweenSlides: 40
+            spaceBetweenSlides: 40,
           },
           1023: {
             slidesPerView: 3,
-            spaceBetweenSlides: 50
-          }
+            spaceBetweenSlides: 50,
+          },
         }}
       >
-        <SwiperSlide>
-          <div className="slide">
-            <div
-              className="slide__item"
-              style={{
-                background: `url('https://photo-resize-zmp3.zmdcdn.me/w320_r1x1_webp/cover/d/a/c/6/dac69cd1300a635c193c0f03e8d6d617.jpg') center right / cover no-repeat`,
-              }}
-            ></div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="slide">
-            <div
-              className="slide__item"
-              style={{
-                background: `url('https://photo-resize-zmp3.zmdcdn.me/w320_r1x1_webp/cover/d/a/c/6/dac69cd1300a635c193c0f03e8d6d617.jpg') center right / cover no-repeat`,
-              }}
-            ></div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="slide">
-            <div
-              className="slide__item"
-              style={{
-                background: `url('https://photo-resize-zmp3.zmdcdn.me/w320_r1x1_webp/cover/d/a/c/6/dac69cd1300a635c193c0f03e8d6d617.jpg') center right / cover no-repeat`,
-              }}
-            ></div>
-          </div>
-        </SwiperSlide>
+        {banner.length > 0 ? (
+          <>
+            {banner.map((item, index) => (
+              <SwiperSlide key={index}>
+                <div className="slide">
+                  <img src={item.banner} alt="" />
+                </div>
+              </SwiperSlide>
+            ))}
+          </>
+        ) : (
+          <>
+            {Array(3)
+              .fill()
+              .map((item, index) => (
+                <SwiperSlide key={index}>
+                  <SlideLoading />
+                </SwiperSlide>
+              ))}
+          </>
+        )}
         <div ref={prevSlideRef} className="swiper-btn-prev">
           <i className="bx bx-chevron-left"></i>
         </div>
@@ -90,6 +80,16 @@ const HeroSlider = (props) => {
   );
 };
 
-HeroSlider.propTypes = {};
+const SlideLoading = () => (
+  <div className="slide">
+    <div className="slide__item">
+      <LoadingSkeleton style={{ paddingTop: "100%" }} />
+    </div>
+  </div>
+);
+
+HeroSlider.propTypes = {
+  banner: PropTypes.array,
+};
 
 export default HeroSlider;

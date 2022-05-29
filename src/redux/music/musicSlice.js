@@ -20,6 +20,15 @@ export const musicSlice = createSlice({
     list: (state, action) => {
       state.list = action.payload
     },
+    clearList: (state, action) => {
+      state.list = []
+      state.currentSong = null
+      state.currentIndexSong = 0
+      state.currentAlbum = null
+      state.isRandom = false
+      state.isRepeat = false
+      state.songsPlayed = []
+    },
     random: (state, action) => {
       state.isRandom = action.payload
     },
@@ -40,10 +49,10 @@ export const musicSlice = createSlice({
     },
     albumPlay: (state, action) => {
       state.currentAlbum = action.payload
-    }
+    },
   }
 })
 
-export const {currentSong, list, random, repeat, listPlayed, clearListPlayed, index, albumPlay} = musicSlice.actions
+export const {currentSong, list, random, repeat, listPlayed, clearListPlayed, index, albumPlay, clearList} = musicSlice.actions
 
 export default musicSlice.reducer

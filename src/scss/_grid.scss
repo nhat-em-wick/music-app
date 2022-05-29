@@ -12,8 +12,8 @@
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin-left: -4px;
-  margin-right: -4px;
+  margin-left: -6px;
+  margin-right: -6px;
 }
 
 .row.no-gutters {
@@ -22,8 +22,8 @@
 }
 
 .col {
-  padding-left: 4px;
-  padding-right: 4px;
+  padding-left: 6px;
+  padding-right: 6px;
 }
 
 .row.no-gutters .col {

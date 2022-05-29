@@ -17,6 +17,7 @@
     width: 100%;
     background-color: getVariable(bg-hover);
   }
+  
   &:hover {
     background-color: getVariable(bg-hover);
   }
@@ -39,6 +40,9 @@
 
   &.selected &__checkbox-custom{
     display: block;
+    &::after {
+      transform: scale(1);
+    }
   }
   &.selected &__left__icon{
     display: none;
@@ -81,37 +85,34 @@
     height: 15px;
     @include centerFlex();
     display: none;
-
-    input[type="checkbox"] {
-      width: 100%;
-      height: 100%;
-      cursor: pointer;
-      position: absolute;
-      opacity: 0;
-      inset: 0;
+    &.hide {
+      visibility: hidden;
     }
 
-    label::before {
+    &::before {
       position: absolute;
-      inset: 0;
-      content: "";
-      pointer-events: none;
-      @include centerFlex();
       border: 2px solid getVariable(border-color);
+      inset: 0;
+      content: '';
       border-radius: 3px;
+      cursor: pointer;
     }
-
-    input[type="checkbox"]:checked ~ label::before {
+    &::after {
+      position: absolute;
+      inset: 0;
       content: "\ea41";
-      font-family: "boxicons";
-      border-color: getVariable(border-color);
+      font-family: boxicons;
+      @include centerFlex;
+      cursor: pointer;
+      transform: scale(0);
+      transition: transform .3s ease;
     }
     
   }
   
   &__thumb {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     overflow: hidden;
     border-radius: 5px;
     position: relative;
@@ -123,7 +124,7 @@
     &__overlay {
       position: absolute;
       inset: 0;
-      background-color: rgba($color: #000000, $alpha: .2);
+      background-color: rgba($color: #000000, $alpha: .5);
       display: none;
     }
 
@@ -172,6 +173,7 @@
   &__info {
     display: flex;
     flex-direction: column;
+    gap: .25rem;
   }
   &__title {
     font-weight: 500;
@@ -179,14 +181,18 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
-
+    text-transform: capitalize;
   }
   &__singers {
-    
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
   }
   &__singer {
     transition: color .3s ease;
     width: fit-content;
+    display: inline-block;
     font-size: getVariable(smaller-font-size);
     color: getVariable(text-color-light);
   }
@@ -210,7 +216,7 @@
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 1;
-
+      color: getVariable(text-color-light);
       &:hover {
         color: getVariable(primary-color);
       }
@@ -231,14 +237,21 @@
     font-size: getVariable(smaller-font-size);
     @include centerFlex();
     color: getVariable(text-color-light);
+    @include mobile {
+      width: 35px;
+      height: 35px;
+    }
   }
   &__right {
     width: 20%;
+    @include mobile {
+      width: 25%;
+    }
     &__hide {
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      gap: getVariable(mb-1);
+      gap: .25rem;
     }
     &__hide .icon--heart {
       display: none;
@@ -252,6 +265,10 @@
       cursor: pointer;
       font-size: 1.2rem;
       flex-shrink: 0;
+      @include mobile {
+        width: 35px;
+        height: 35px;
+      }
       &:hover {
         background-color: getVariable(bg-hover);
       }
@@ -268,7 +285,7 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      gap: getVariable(mb-1);
+      gap: .25rem;
       display: none;
     }
   }
