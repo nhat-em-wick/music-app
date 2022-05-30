@@ -1,0 +1,38 @@
+@use '../../scss/' as *;
+
+.page-error {
+  @include centerFlex;
+  &__content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: getVariable(mb-2);
+  }
+  &__title {
+    font-size: 10rem;
+    line-height: 10rem;
+  }
+  &__description {
+    font-size: 2rem;
+    line-height: 2rem;
+  }
+  &__link {
+    margin: 0 auto;
+    padding: getVariable(mb-1) getVariable(mb-3);
+    border: 1px solid getVariable(primary-color);
+    width: fit-content;
+    border-radius: 20px;
+    color: getVariable(primary-color);
+    text-align: center;
+    cursor: pointer;
+    transition: .3s ease;
+
+    @include mobile {
+      width: 100%;
+    }
+    &:hover {
+      background-color: getVariable(primary-color);
+      color: #fff;
+    }
+  }
+}

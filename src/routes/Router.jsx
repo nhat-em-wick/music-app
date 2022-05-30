@@ -18,6 +18,7 @@ import SearchAll from '../pages/search/SearchAll'
 import SearchSongs from '../pages/search/SearchSongs'
 import SearchAlbum from '../pages/search/SearchAlbum'
 import DetailSong from '../pages/detail-song/DetailSong'
+import Page404 from '../pages/404/404'
 const Router = () => {
   return (
     <BrowserRouter>
@@ -42,7 +43,7 @@ const Router = () => {
 
           <Route path='dang-nhap' element={<Login/>}/>
           <Route path='dang-ki' element={<Register/>}/>
-
+          <Route path='*' element={<Page404/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

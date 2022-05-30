@@ -46,6 +46,7 @@ html {
   background-color: getVariable(bg-body);
   user-select: none;
   line-height: 1.3rem;
+  min-height: 100vh;
 }
 
 @each $theme-name, $properties in $themes {
