@@ -37,13 +37,14 @@ const Discover = (props) => {
       try {
         const res = await zingApi.home();
         const bannerResponse = res.data.items[0].items;
-        const recommendResponse = res.data.items[3].items;
+        const recommendResponse = res.data.items[3].items[0].album;
+        console.log(recommendResponse)
         const todayResponse = res.data.items[4].items;
         timerID.current = setTimeout(() => {
           setBanner(bannerResponse);
           setPlayListRecommend(
             recommendResponse.length > 10
-              ? recommendResponse.slice(0, 9)
+              ? recommendResponse.slice(0, 10)
               : recommendResponse
           );
           setPlaylistToday(
