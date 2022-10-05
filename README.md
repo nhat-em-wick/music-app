@@ -1,2 +1,2 @@
 ## Demo
-> Link demo: [https://clinquant-starship-de8875.netlify.app](https://clinquant-starship-de8875.netlify.app)
+> Link demo: [https://music-app-inky.vercel.app/](https://music-app-inky.vercel.app/)
